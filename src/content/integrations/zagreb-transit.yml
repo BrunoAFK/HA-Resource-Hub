@@ -1,6 +1,6 @@
 order: 20
 name: Zagreb Transit
-icon: "bi bi-train-front"
+icon: "🚋"
 source:
   hr: ZET · GTFS / GTFS-RT
   en: ZET · GTFS / GTFS-RT

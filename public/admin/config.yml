@@ -168,7 +168,7 @@ collections:
     fields:
       - { label: Sort order (lower shows first), name: order, widget: number, value_type: int, min: 0 }
       - { label: Name, name: name, widget: string }
-      - { label: Icon class (Bootstrap Icons), name: icon, widget: string, hint: "Example: bi bi-cloud-sun" }
+      - { label: Icon, name: icon, widget: string }
       - label: Source
         name: source
         widget: object
@@ -203,7 +203,7 @@ collections:
     fields:
       - { label: Sort order (lower shows first), name: order, widget: number, value_type: int, min: 0 }
       - { label: Name, name: name, widget: string }
-      - { label: Icon class (Bootstrap Icons), name: icon, widget: string, hint: "Example: bi bi-grid-3x3-gap" }
+      - { label: Icon, name: icon, widget: string }
       - label: Description
         name: description
         widget: object
@@ -229,7 +229,7 @@ collections:
     fields:
       - { label: Sort order (lower shows first), name: order, widget: number, value_type: int, min: 0 }
       - { label: Name, name: name, widget: string }
-      - { label: Icon class (Bootstrap Icons), name: icon, widget: string, hint: "Example: bi bi-server" }
+      - { label: Icon, name: icon, widget: string }
       - label: Description
         name: description
         widget: object

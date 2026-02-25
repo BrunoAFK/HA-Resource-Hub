@@ -1,6 +1,6 @@
 order: 10
 name: Vrijeme HR
-icon: "bi bi-cloud-sun"
+icon: "⛅"
 source:
   hr: DHMZ · meteo.hr
   en: DHMZ · meteo.hr

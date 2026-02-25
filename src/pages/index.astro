@@ -120,7 +120,7 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
                 style={`--card-color: ${integration.data.accentColor}; animation-delay: ${getDelay(index, 0.1, 0.1)};`}
               >
                 <div class="card-accent-bar"></div>
-                <span class="card-icon"><i class={integration.data.icon} aria-hidden="true"></i></span>
+                <span class="card-icon">{integration.data.icon}</span>
                 <div>
                   <div class="card-name">{integration.data.name}</div>
                   <div
@@ -177,7 +177,7 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
                 style={`animation-delay:${getDelay(index, 0.1, 0.05)}`}
               >
                 <div class="repo-row-left">
-                  <span class="repo-icon"><i class={scriptItem.data.icon} aria-hidden="true"></i></span>
+                  <span class="repo-icon">{scriptItem.data.icon}</span>
                   <div>
                     <div class="repo-name">{scriptItem.data.name}</div>
                     <div
@@ -273,7 +273,7 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
                     class="project-card"
                     style={`animation-delay:${getDelay(index, 0.1, 0.05)}`}
                   >
-                    <span class="project-card-icon"><i class={project.data.icon} aria-hidden="true"></i></span>
+                    <span class="project-card-icon">{project.data.icon}</span>
                     <div class="project-card-name">{project.data.name}</div>
                     <p class="project-card-desc" data-hr={project.data.description.hr} data-en={project.data.description.en}>
                       {project.data.description.hr}
@@ -308,17 +308,6 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
         if (!tracker || typeof tracker.track !== 'function') return;
         tracker.track(name, payload);
       } catch (_) {}
-    }
-
-    function setIconClass(container, iconClass) {
-      if (!container || typeof iconClass !== 'string') return;
-      let icon = container.querySelector('i');
-      if (!icon) {
-        icon = document.createElement('i');
-        icon.setAttribute('aria-hidden', 'true');
-        container.replaceChildren(icon);
-      }
-      icon.className = iconClass;
     }
 
     function setCookie(name, value, maxAgeSeconds) {
@@ -639,7 +628,7 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
       if (typeof data.docsUrl === 'string') card.href = data.docsUrl;
       if (typeof data.icon === 'string') {
         const iconEl = card.querySelector('.card-icon');
-        setIconClass(iconEl, data.icon);
+        if (iconEl) iconEl.textContent = data.icon;
       }
       if (typeof data.accentColor === 'string') card.style.setProperty('--card-color', data.accentColor);
       setLocalizedContent(card.querySelector('.card-source'), data.source);
@@ -671,7 +660,7 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
       if (typeof data.url === 'string') row.href = data.url;
       if (typeof data.icon === 'string') {
         const iconEl = row.querySelector('.repo-icon');
-        setIconClass(iconEl, data.icon);
+        if (iconEl) iconEl.textContent = data.icon;
       }
       if (typeof data.tag === 'string') {
         const tagEl = row.querySelector('.repo-tag');
@@ -693,7 +682,7 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
       if (typeof data.url === 'string') card.href = data.url;
       if (typeof data.icon === 'string') {
         const iconEl = card.querySelector('.project-card-icon');
-        setIconClass(iconEl, data.icon);
+        if (iconEl) iconEl.textContent = data.icon;
       }
       if (typeof data.tag === 'string') {
         const tagEl = card.querySelector('.project-card-tag');

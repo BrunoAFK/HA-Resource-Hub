@@ -1,6 +1,6 @@
 order: 10
 name: ha-python-scripts
-icon: "bi bi-filetype-py"
+icon: "🐍"
 description:
   hr: Zbirka Python skripti za automatizacije u Home Assistantu.
   en: Collection of Python scripts for Home Assistant automations.

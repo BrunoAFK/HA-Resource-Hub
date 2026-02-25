@@ -1,6 +1,6 @@
 order: 30
 name: ha-automations
-icon: "bi bi-cpu"
+icon: "🤖"
 description:
   hr: Gotove automatizacije za svakodnevnu uporabu, obavijesti, scene i rutine.
   en: Ready-made automations for daily use, notifications, scenes and routines.
