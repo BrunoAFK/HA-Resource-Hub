@@ -1,0 +1,28 @@
+---
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <base href="/admin/" />
+    <title>Content Manager</title>
+  </head>
+  <body>
+    <script is:inline>
+      window.CMS_MANUAL_INIT = true;
+
+      const decapScript = document.createElement('script');
+      decapScript.src = 'https://unpkg.com/decap-cms@^3.8.3/dist/decap-cms.js';
+      decapScript.onload = () => {
+        const previewScript = document.createElement('script');
+        previewScript.src = '/admin/preview.js';
+        previewScript.onload = () => window.CMS && window.CMS.init();
+        document.body.appendChild(previewScript);
+      };
+
+      document.body.appendChild(decapScript);
+    </script>
+  </body>
+</html>

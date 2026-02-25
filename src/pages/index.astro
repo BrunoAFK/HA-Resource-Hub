@@ -1,0 +1,681 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const siteEntry = await getEntry('site', 'home');
+
+if (!siteEntry) {
+  throw new Error('Missing site data file: src/content/site/home.yml');
+}
+
+const site = siteEntry.data;
+
+const integrations = (await getCollection('integrations')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const scripts = (await getCollection('scripts')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const heroTitleHr = `${site.hero.titleMain.hr}<span>${site.hero.titleSub.hr}</span>`;
+const heroTitleEn = `${site.hero.titleMain.en}<span>${site.hero.titleSub.en}</span>`;
+
+const getDelay = (index: number, start = 0.1, step = 0.05) =>
+  `${(start + index * step).toFixed(2)}s`;
+---
+
+<BaseLayout
+  title={site.siteTitle}
+  description={site.metaDescription}
+  htmlLang={site.htmlLang}
+  defaultLang={site.i18n.defaultLang}
+>
+  <nav>
+    <span class="nav-logo"><span id="navLogoPrefix">{site.nav.logoPrefix}</span><span id="navLogoHighlight">{site.nav.logoHighlight}</span></span>
+    <div class="nav-actions">
+      <button class="lang-toggle" type="button" id="langBtn" aria-label="Toggle language">EN</button>
+      <div class="theme-control" id="themeControl" role="group" aria-label="Theme mode">
+        <button
+          class="theme-btn"
+          type="button"
+          data-theme-choice="light"
+          aria-label="Light mode"
+          title="Light mode"
+        >
+          ☀
+        </button>
+        <button
+          class="theme-btn"
+          type="button"
+          data-theme-choice="auto"
+          aria-label="Auto mode"
+          title="Auto mode"
+        >
+          A
+        </button>
+        <button
+          class="theme-btn"
+          type="button"
+          data-theme-choice="dark"
+          aria-label="Dark mode"
+          title="Dark mode"
+        >
+          🌙
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero hero-first">
+    <div class="hero-inner">
+      <p class="hero-label" id="heroLabel" data-hr={site.hero.label.hr} data-en={site.hero.label.en}>{site.hero.label.hr}</p>
+      <h1
+        id="heroTitle"
+        class="hero-h1"
+        data-rich="true"
+        data-hr={heroTitleHr}
+        data-en={heroTitleEn}
+        set:html={heroTitleHr}
+      ></h1>
+      <p
+        id="heroDescription"
+        class="hero-desc"
+        data-hr={site.hero.description.hr}
+        data-en={site.hero.description.en}
+      >
+        {site.hero.description.hr}
+      </p>
+    </div>
+  </section>
+
+  <main class="content">
+    <div class="s-b section-wrap primary-main primary-top">
+      <div class="inner">
+        <div class="section-header">
+          <span class="section-num" id="sectionNumIntegrations">{site.sections.integrations.number}</span>
+          <span
+            id="sectionTitleIntegrations"
+            class="section-title"
+            data-hr={site.sections.integrations.title.hr}
+            data-en={site.sections.integrations.title.en}
+          >
+            {site.sections.integrations.title.hr}
+          </span>
+        </div>
+
+        <div class="int-grid">
+          {
+            integrations.map((integration, index) => (
+              <a
+                class="int-card"
+                data-entry-id={integration.id}
+                data-entry-name={integration.data.name}
+                href={integration.data.docsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={`--card-color: ${integration.data.accentColor}; animation-delay: ${getDelay(index, 0.1, 0.1)};`}
+              >
+                <div class="card-accent-bar"></div>
+                <span class="card-icon">{integration.data.icon}</span>
+                <div>
+                  <div class="card-name">{integration.data.name}</div>
+                  <div
+                    class="card-source"
+                    data-hr={integration.data.source.hr}
+                    data-en={integration.data.source.en}
+                  >
+                    {integration.data.source.hr}
+                  </div>
+                </div>
+                <p
+                  class="card-desc"
+                  data-hr={integration.data.description.hr}
+                  data-en={integration.data.description.en}
+                >
+                  {integration.data.description.hr}
+                </p>
+                <div class="repo-line" role="button" tabindex="0" data-repo-url={integration.data.repoUrl}>
+                  <span class="repo-chip">{integration.data.repoChip}</span>
+                  <span class="repo-url">{integration.data.repoDisplay}</span>
+                  <span class="repo-copy" aria-hidden="true">📋</span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="s-a section-wrap primary-main primary-bottom">
+      <div class="inner">
+        <div class="section-header">
+          <span class="section-num" id="sectionNumScripts">{site.sections.scripts.number}</span>
+          <span
+            id="sectionTitleScripts"
+            class="section-title"
+            data-hr={site.sections.scripts.title.hr}
+            data-en={site.sections.scripts.title.en}
+          >
+            {site.sections.scripts.title.hr}
+          </span>
+        </div>
+
+        <div class="repos-list">
+          {
+            scripts.map((scriptItem, index) => (
+              <a
+                data-entry-id={scriptItem.id}
+                data-entry-name={scriptItem.data.name}
+                href={scriptItem.data.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="repo-row"
+                style={`animation-delay:${getDelay(index, 0.1, 0.05)}`}
+              >
+                <div class="repo-row-left">
+                  <span class="repo-icon">{scriptItem.data.icon}</span>
+                  <div>
+                    <div class="repo-name">{scriptItem.data.name}</div>
+                    <div
+                      class="repo-desc"
+                      data-hr={scriptItem.data.description.hr}
+                      data-en={scriptItem.data.description.en}
+                    >
+                      {scriptItem.data.description.hr}
+                    </div>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:0.5rem">
+                  <span class="repo-tag">{scriptItem.data.tag}</span>
+                  <span class="repo-arrow">→</span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="s-c section-wrap secondary-block">
+      <div class="inner">
+        <div class="combo-row">
+          <div class="combo-col">
+            <div class="section-header">
+              <span class="section-num" id="sectionNumAbout">{site.sections.about.number}</span>
+              <span
+                id="sectionTitleAbout"
+                class="section-title"
+                data-hr={site.sections.about.title.hr}
+                data-en={site.sections.about.title.en}
+              >
+                {site.sections.about.title.hr}
+              </span>
+            </div>
+
+            <div class="about-wrap">
+              <div class="about-sticky">
+                <div class="ava">
+                  <Image
+                    id="aboutAvatar"
+                    src={site.about.avatar}
+                    alt={site.about.avatarAlt}
+                    width={52}
+                    height={52}
+                    data-fallback={site.about.fallbackAvatar}
+                  />
+                </div>
+                <div class="aname" id="aboutName">{site.about.name}</div>
+                <div class="arole" id="aboutRole" data-hr={site.about.role.hr} data-en={site.about.role.en}>
+                  {site.about.role.hr}
+                </div>
+                <p class="abio" id="aboutBio" data-hr={site.about.bio.hr} data-en={site.about.bio.en}>
+                  {site.about.bio.hr}
+                </p>
+                <div class="srow" id="aboutSocialLinks">
+                  {
+                    site.about.socialLinks.map((link) => (
+                      <a href={link.url} target="_blank" rel="noopener noreferrer" class="soc" title={link.label}>
+                        {link.icon}
+                      </a>
+                    ))
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="combo-col">
+            <div class="section-header">
+              <span class="section-num" id="sectionNumProjects">{site.sections.projects.number}</span>
+              <span
+                id="sectionTitleProjects"
+                class="section-title"
+                data-hr={site.sections.projects.title.hr}
+                data-en={site.sections.projects.title.en}
+              >
+                {site.sections.projects.title.hr}
+              </span>
+            </div>
+
+            <div class="projects-scroll">
+              {
+                projects.map((project, index) => (
+                  <a
+                    data-entry-id={project.id}
+                    data-entry-name={project.data.name}
+                    href={project.data.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="project-card"
+                    style={`animation-delay:${getDelay(index, 0.1, 0.05)}`}
+                  >
+                    <span class="project-card-icon">{project.data.icon}</span>
+                    <div class="project-card-name">{project.data.name}</div>
+                    <p class="project-card-desc" data-hr={project.data.description.hr} data-en={project.data.description.en}>
+                      {project.data.description.hr}
+                    </p>
+                    <span class="project-card-tag">{project.data.tag}</span>
+                  </a>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-min">
+      <span class="footer-center">
+        <span id="footerText">{site.footer.text}</span> · © <span id="footerYear"></span>
+      </span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" data-hr={site.i18n.copyToast.hr} data-en={site.i18n.copyToast.en}></div>
+
+  <script is:inline>
+    document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+    function setCookie(name, value, maxAgeSeconds) {
+      document.cookie = `${name}=${encodeURIComponent(value)}; max-age=${maxAgeSeconds}; path=/; samesite=lax`;
+    }
+
+    function getCookie(name) {
+      const parts = document.cookie.split(';').map((v) => v.trim());
+      const found = parts.find((v) => v.startsWith(name + '='));
+      return found ? decodeURIComponent(found.split('=').slice(1).join('=')) : null;
+    }
+
+    const THEME_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
+    let themeMode = 'auto';
+
+    function getResolvedTheme(mode) {
+      if (mode === 'light' || mode === 'dark') return mode;
+      const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+      return prefersLight ? 'light' : 'dark';
+    }
+
+    function applyThemeMode(mode) {
+      const html = document.documentElement;
+      themeMode = mode === 'light' || mode === 'dark' ? mode : 'auto';
+      const resolved = getResolvedTheme(themeMode);
+      html.setAttribute('data-theme', resolved);
+      const control = document.getElementById('themeControl');
+      if (control) {
+        const modeLabel = themeMode === 'auto' ? `auto (${resolved})` : themeMode;
+        control.setAttribute('aria-label', `Theme mode: ${modeLabel}`);
+      }
+      document.querySelectorAll('.theme-btn[data-theme-choice]').forEach((btn) => {
+        const isActive = btn.getAttribute('data-theme-choice') === themeMode;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', String(isActive));
+      });
+    }
+
+    function setThemeMode(mode) {
+      applyThemeMode(mode);
+      setCookie('theme', themeMode, THEME_COOKIE_MAX_AGE);
+    }
+
+    document.querySelectorAll('.theme-btn[data-theme-choice]').forEach((btn) => {
+      btn.addEventListener('click', () => setThemeMode(btn.getAttribute('data-theme-choice') || 'auto'));
+    });
+
+    const savedTheme = getCookie('theme');
+    if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'auto') {
+      applyThemeMode(savedTheme);
+    } else {
+      applyThemeMode('auto');
+    }
+
+    if (window.matchMedia) {
+      const schemeQuery = window.matchMedia('(prefers-color-scheme: light)');
+      const handleSystemThemeChange = () => {
+        if (themeMode === 'auto') applyThemeMode('auto');
+      };
+      if (typeof schemeQuery.addEventListener === 'function') {
+        schemeQuery.addEventListener('change', handleSystemThemeChange);
+      } else if (typeof schemeQuery.addListener === 'function') {
+        schemeQuery.addListener(handleSystemThemeChange);
+      }
+    }
+
+    const langBtn = document.getElementById('langBtn');
+    const defaultLang = document.documentElement.getAttribute('data-default-lang') === 'en' ? 'en' : 'hr';
+    let lang = defaultLang;
+
+    function applyLang(nextLang) {
+      lang = nextLang === 'en' ? 'en' : 'hr';
+      langBtn.textContent = lang === 'hr' ? 'EN' : 'HR';
+      document.querySelectorAll('[data-hr]').forEach((el) => {
+        const val = el.getAttribute('data-' + lang);
+        if (!val) return;
+        if (el.getAttribute('data-rich') === 'true') {
+          el.innerHTML = val;
+        } else {
+          el.textContent = val;
+        }
+      });
+    }
+
+    function toggleLang() {
+      const next = lang === 'hr' ? 'en' : 'hr';
+      applyLang(next);
+      setCookie('lang', next, THEME_COOKIE_MAX_AGE);
+    }
+
+    langBtn.addEventListener('click', toggleLang);
+
+    const savedLang = getCookie('lang');
+    if (savedLang === 'hr' || savedLang === 'en') {
+      applyLang(savedLang);
+    } else {
+      applyLang(defaultLang);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    function copyRepoLine(url, row) {
+      navigator.clipboard.writeText(url).then(() => {
+        const icon = row.querySelector('.repo-copy');
+        icon.textContent = '✓';
+        icon.classList.add('ok');
+        const toast = document.getElementById('toast');
+        const toastMsg = toast.getAttribute(lang === 'hr' ? 'data-hr' : 'data-en');
+        showToast(toastMsg || 'Copied');
+        setTimeout(() => {
+          icon.textContent = '📋';
+          icon.classList.remove('ok');
+        }, 2000);
+      });
+    }
+
+    document.querySelectorAll('.repo-line').forEach((row) => {
+      const triggerCopy = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const url = row.getAttribute('data-repo-url');
+        if (url) copyRepoLine(url, row);
+      };
+
+      row.addEventListener('click', triggerCopy);
+      row.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          triggerCopy(event);
+        }
+      });
+    });
+
+    document.querySelectorAll('.ava img').forEach((img) => {
+      img.addEventListener('error', () => {
+        const fallback = img.getAttribute('data-fallback') || '👤';
+        img.parentElement.textContent = fallback;
+      });
+    });
+
+    function setTextContent(element, value) {
+      if (!element || typeof value !== 'string') return;
+      element.textContent = value;
+    }
+
+    function setLocalizedContent(element, value, options = {}) {
+      if (!element || !value || typeof value !== 'object') return;
+      if (typeof value.hr === 'string') element.setAttribute('data-hr', value.hr);
+      if (typeof value.en === 'string') element.setAttribute('data-en', value.en);
+      const visible = element.getAttribute(`data-${lang}`) || element.getAttribute('data-hr') || element.getAttribute('data-en') || '';
+      if (options.rich) {
+        element.innerHTML = visible;
+      } else {
+        element.textContent = visible;
+      }
+    }
+
+    function buildHeroLocalizedTitle(titleMain, titleSub) {
+      const current = {
+        hr: document.getElementById('heroTitle')?.getAttribute('data-hr') || '',
+        en: document.getElementById('heroTitle')?.getAttribute('data-en') || ''
+      };
+      const next = { ...current };
+      if (titleMain && typeof titleMain.hr === 'string' && titleSub && typeof titleSub.hr === 'string') {
+        next.hr = `${titleMain.hr}<span>${titleSub.hr}</span>`;
+      }
+      if (titleMain && typeof titleMain.en === 'string' && titleSub && typeof titleSub.en === 'string') {
+        next.en = `${titleMain.en}<span>${titleSub.en}</span>`;
+      }
+      return next;
+    }
+
+    function applySitePreview(data) {
+      if (!data || typeof data !== 'object') return;
+
+      if (data.nav && typeof data.nav === 'object') {
+        setTextContent(document.getElementById('navLogoPrefix'), data.nav.logoPrefix);
+        setTextContent(document.getElementById('navLogoHighlight'), data.nav.logoHighlight);
+      }
+
+      if (data.hero && typeof data.hero === 'object') {
+        setLocalizedContent(document.getElementById('heroLabel'), data.hero.label);
+        setLocalizedContent(document.getElementById('heroDescription'), data.hero.description);
+        setLocalizedContent(
+          document.getElementById('heroTitle'),
+          buildHeroLocalizedTitle(data.hero.titleMain, data.hero.titleSub),
+          { rich: true }
+        );
+      }
+
+      if (data.sections && typeof data.sections === 'object') {
+        const applySection = (key, numId, titleId) => {
+          const section = data.sections[key];
+          if (!section || typeof section !== 'object') return;
+          setTextContent(document.getElementById(numId), section.number);
+          setLocalizedContent(document.getElementById(titleId), section.title);
+        };
+        applySection('integrations', 'sectionNumIntegrations', 'sectionTitleIntegrations');
+        applySection('scripts', 'sectionNumScripts', 'sectionTitleScripts');
+        applySection('projects', 'sectionNumProjects', 'sectionTitleProjects');
+        applySection('about', 'sectionNumAbout', 'sectionTitleAbout');
+      }
+
+      if (data.about && typeof data.about === 'object') {
+        const avatar = document.getElementById('aboutAvatar');
+        if (avatar) {
+          if (typeof data.about.avatar === 'string') avatar.src = data.about.avatar;
+          if (typeof data.about.avatarAlt === 'string') avatar.alt = data.about.avatarAlt;
+          if (typeof data.about.fallbackAvatar === 'string') avatar.setAttribute('data-fallback', data.about.fallbackAvatar);
+        }
+        setTextContent(document.getElementById('aboutName'), data.about.name);
+        setLocalizedContent(document.getElementById('aboutRole'), data.about.role);
+        setLocalizedContent(document.getElementById('aboutBio'), data.about.bio);
+
+        if (Array.isArray(data.about.socialLinks)) {
+          const linksWrap = document.getElementById('aboutSocialLinks');
+          if (linksWrap) {
+            linksWrap.innerHTML = '';
+            data.about.socialLinks.forEach((link) => {
+              if (!link || typeof link !== 'object' || typeof link.url !== 'string') return;
+              const anchor = document.createElement('a');
+              anchor.href = link.url;
+              anchor.target = '_blank';
+              anchor.rel = 'noopener noreferrer';
+              anchor.className = 'soc';
+              anchor.title = typeof link.label === 'string' ? link.label : 'Link';
+              anchor.textContent = typeof link.icon === 'string' ? link.icon : '•';
+              linksWrap.appendChild(anchor);
+            });
+          }
+        }
+      }
+
+      if (data.footer && typeof data.footer === 'object') {
+        setTextContent(document.getElementById('footerText'), data.footer.text);
+      }
+
+      if (data.i18n && typeof data.i18n === 'object' && data.i18n.copyToast && typeof data.i18n.copyToast === 'object') {
+        const toast = document.getElementById('toast');
+        if (toast) {
+          if (typeof data.i18n.copyToast.hr === 'string') toast.setAttribute('data-hr', data.i18n.copyToast.hr);
+          if (typeof data.i18n.copyToast.en === 'string') toast.setAttribute('data-en', data.i18n.copyToast.en);
+        }
+      }
+    }
+
+    function findPreviewItem(selector, payload) {
+      const items = Array.from(document.querySelectorAll(selector));
+      return (
+        items.find((item) => {
+          if (typeof payload.slug === 'string' && payload.slug && item.getAttribute('data-entry-id') === payload.slug) {
+            return true;
+          }
+          return typeof payload.data?.name === 'string' && item.getAttribute('data-entry-name') === payload.data.name;
+        }) || null
+      );
+    }
+
+    function applyIntegrationPreview(payload) {
+      const card = findPreviewItem('.int-card', payload);
+      if (!card) return;
+      const data = payload.data || {};
+
+      if (typeof data.name === 'string') {
+        card.setAttribute('data-entry-name', data.name);
+        const nameEl = card.querySelector('.card-name');
+        if (nameEl) nameEl.textContent = data.name;
+      }
+      if (typeof data.docsUrl === 'string') card.href = data.docsUrl;
+      if (typeof data.icon === 'string') {
+        const iconEl = card.querySelector('.card-icon');
+        if (iconEl) iconEl.textContent = data.icon;
+      }
+      if (typeof data.accentColor === 'string') card.style.setProperty('--card-color', data.accentColor);
+      setLocalizedContent(card.querySelector('.card-source'), data.source);
+      setLocalizedContent(card.querySelector('.card-desc'), data.description);
+      if (typeof data.repoUrl === 'string') {
+        const repoLine = card.querySelector('.repo-line');
+        if (repoLine) repoLine.setAttribute('data-repo-url', data.repoUrl);
+      }
+      if (typeof data.repoChip === 'string') {
+        const repoChip = card.querySelector('.repo-chip');
+        if (repoChip) repoChip.textContent = data.repoChip;
+      }
+      if (typeof data.repoDisplay === 'string') {
+        const repoDisplay = card.querySelector('.repo-url');
+        if (repoDisplay) repoDisplay.textContent = data.repoDisplay;
+      }
+    }
+
+    function applyScriptPreview(payload) {
+      const row = findPreviewItem('.repo-row', payload);
+      if (!row) return;
+      const data = payload.data || {};
+
+      if (typeof data.name === 'string') {
+        row.setAttribute('data-entry-name', data.name);
+        const nameEl = row.querySelector('.repo-name');
+        if (nameEl) nameEl.textContent = data.name;
+      }
+      if (typeof data.url === 'string') row.href = data.url;
+      if (typeof data.icon === 'string') {
+        const iconEl = row.querySelector('.repo-icon');
+        if (iconEl) iconEl.textContent = data.icon;
+      }
+      if (typeof data.tag === 'string') {
+        const tagEl = row.querySelector('.repo-tag');
+        if (tagEl) tagEl.textContent = data.tag;
+      }
+      setLocalizedContent(row.querySelector('.repo-desc'), data.description);
+    }
+
+    function applyProjectPreview(payload) {
+      const card = findPreviewItem('.project-card', payload);
+      if (!card) return;
+      const data = payload.data || {};
+
+      if (typeof data.name === 'string') {
+        card.setAttribute('data-entry-name', data.name);
+        const nameEl = card.querySelector('.project-card-name');
+        if (nameEl) nameEl.textContent = data.name;
+      }
+      if (typeof data.url === 'string') card.href = data.url;
+      if (typeof data.icon === 'string') {
+        const iconEl = card.querySelector('.project-card-icon');
+        if (iconEl) iconEl.textContent = data.icon;
+      }
+      if (typeof data.tag === 'string') {
+        const tagEl = card.querySelector('.project-card-tag');
+        if (tagEl) tagEl.textContent = data.tag;
+      }
+      setLocalizedContent(card.querySelector('.project-card-desc'), data.description);
+    }
+
+    window.addEventListener('message', (event) => {
+      if (event.origin !== window.location.origin) return;
+      const payload = event.data;
+      if (!payload || payload.type !== 'decap-preview-update') return;
+
+      if (payload.collection === 'site' || payload.collection === 'home') {
+        applySitePreview(payload.data);
+        return;
+      }
+      if (payload.collection === 'integrations') {
+        applyIntegrationPreview(payload);
+        return;
+      }
+      if (payload.collection === 'scripts') {
+        applyScriptPreview(payload);
+        return;
+      }
+      if (payload.collection === 'projects') {
+        applyProjectPreview(payload);
+      }
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08 }
+    );
+
+    document
+      .querySelectorAll(
+        '.int-card, .repo-row, .project-card, .about-wrap, .combo-col .section-header, .combo-col:first-child .srow .soc'
+      )
+      .forEach((el) => observer.observe(el));
+  </script>
+</BaseLayout>

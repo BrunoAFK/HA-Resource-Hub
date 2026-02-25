@@ -1,0 +1,77 @@
+siteTitle: Home Assistant Resource Hub
+metaDescription: Home Assistant integracije, skripte i projekti.
+htmlLang: hr
+nav:
+  logoPrefix: Bruno
+  logoHighlight: AFK · HA
+hero:
+  label:
+    hr: Središte resursa za Home Assistant
+    en: Home Assistant Resource Hub
+  titleMain:
+    hr: Home Assistant
+    en: Home Assistant
+  titleSub:
+    hr: Resource Hub
+    en: Resource Hub
+  description:
+    hr: Moje HACS integracije, skripte i alati za Home Assistant. Klikni karticu za
+      dokumentaciju, a unutar svake kartice možeš kopirati poveznicu
+      repozitorija za brzu instalaciju putem HACS-a.
+    en: My HACS integrations, scripts and tools for Home Assistant. Open a card for
+      docs, and use the copy action to copy repository links for quick HACS
+      installation.
+sections:
+  integrations:
+    number: "01"
+    title:
+      hr: HACS integracije
+      en: HACS integrations
+  scripts:
+    number: "02"
+    title:
+      hr: Skripte i resursi
+      en: Scripts and resources
+  projects:
+    number: "03"
+    title:
+      hr: Ostali projekti
+      en: Other projects
+  about:
+    number: "04"
+    title:
+      hr: O meni
+      en: About me
+about:
+  avatar: https://avatars.githubusercontent.com/BrunoAFK
+  avatarAlt: Bruno
+  fallbackAvatar: 👤
+  name: Bruno Pavelja
+  role:
+    hr: Operations Leader · DevOps · Zagreb
+    en: Operations Leader · DevOps · Zagreb
+  bio:
+    hr: Više od 10 godina iskustva u IT-u, DevOpsu, skaliranju organizacija i
+      SaaS-u. U slobodno vrijeme razvijam HA alate i open-source projekte.
+    en: 10+ years in IT, DevOps, org scaling and SaaS. In spare time I build HA
+      tools and open-source projects.
+  socialLinks:
+    - label: Website
+      url: https://pavelja.com/
+      icon: 🌐
+    - label: GitHub
+      url: https://github.com/BrunoAFK
+      icon: 🐙
+    - label: LinkedIn
+      url: https://www.linkedin.com/in/brunopavelja/
+      icon: 💼
+    - label: GitLab
+      url: https://gitlab.com/bruno-afk
+      icon: 🦊
+footer:
+  text: BrunoAFK · Home Assistant
+i18n:
+  defaultLang: hr
+  copyToast:
+    hr: Repo link kopiran 📋
+    en: Repo link copied 📋

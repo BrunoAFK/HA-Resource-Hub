@@ -1,0 +1,8 @@
+order: 30
+name: Pavelja Podcast
+icon: "🎙️"
+description:
+  hr: Agregator i distribucijski kanal neformalnih RSS feedova hrvatskih radijskih emisija za slušanje u bilo kojoj podcast aplikaciji.
+  en: Aggregator and distribution channel for unofficial Croatian radio show RSS feeds playable in any podcast app.
+tag: Podcast
+url: https://podcast.pavelja.me/

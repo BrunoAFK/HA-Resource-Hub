@@ -1,0 +1,14 @@
+order: 40
+name: Horoskop HR
+icon: "🔮"
+source:
+  hr: ehoroskop.net · AI
+  en: ehoroskop.net · AI
+description:
+  hr: Dnevni, tjedni i mjesečni horoskop za sve znakove zodijaka u Home Assistantu. Podržava AI prijevod na više jezika.
+  en: Daily, weekly and monthly horoscopes for all zodiac signs in Home Assistant. Supports AI translation into multiple languages.
+docsUrl: https://brunoafk.github.io/horoskop_hr/
+repoUrl: https://github.com/BrunoAFK/horoskop_hr
+repoDisplay: github.com/BrunoAFK/horoskop_hr
+repoChip: HACS
+accentColor: "#a78bfa"

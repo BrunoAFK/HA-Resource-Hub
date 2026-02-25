@@ -1,0 +1,8 @@
+order: 30
+name: ha-automations
+icon: "🤖"
+description:
+  hr: Gotove automatizacije za svakodnevnu uporabu, obavijesti, scene i rutine.
+  en: Ready-made automations for daily use, notifications, scenes and routines.
+tag: HA
+url: https://github.com/BrunoAFK

@@ -1,0 +1,8 @@
+order: 10
+name: ha-python-scripts
+icon: "🐍"
+description:
+  hr: Zbirka Python skripti za automatizacije u Home Assistantu.
+  en: Collection of Python scripts for Home Assistant automations.
+tag: Python
+url: https://github.com/BrunoAFK

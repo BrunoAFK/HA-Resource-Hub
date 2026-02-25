@@ -1,0 +1,14 @@
+order: 10
+name: Vrijeme HR
+icon: "⛅"
+source:
+  hr: DHMZ · meteo.hr
+  en: DHMZ · meteo.hr
+description:
+  hr: Hrvatska vremenska integracija temeljena na DHMZ podacima. Pruža vremensku prognozu, temperaturu, vlažnost, tlak i smjer vjetra za gradove diljem Hrvatske.
+  en: Croatian weather integration powered by DHMZ data. Provides forecasts, temperature, humidity, pressure and wind for cities across Croatia.
+docsUrl: https://brunoafk.github.io/vrijeme_hr/
+repoUrl: https://github.com/BrunoAFK/vrijeme_hr
+repoDisplay: github.com/BrunoAFK/vrijeme_hr
+repoChip: HACS
+accentColor: "#60a5fa"

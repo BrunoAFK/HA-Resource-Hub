@@ -1,0 +1,8 @@
+order: 10
+name: CalendarDND
+icon: "📅"
+description:
+  hr: Android aplikacija koja automatski uključuje i isključuje način rada Ne ometaj prema događajima u kalendaru, uz lokalnu obradu podataka.
+  en: Android app that automatically enables and disables Do Not Disturb based on calendar events, with privacy-first on-device processing.
+tag: Web app
+url: https://brunoafk.github.io/CalendarDND/

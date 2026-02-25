@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="hr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrunoAFK · Home Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --font: 'Work Sans', sans-serif;
+      --mono: 'DM Mono', monospace;
+      --bg:      #0e0f11;
+      --bg2:     #131416;
+      --bg3:     #18191c;
+      --surface: #161719;
+      --border:  #2a2b2e;
+      --text:    #e8e9eb;
+      --muted:   #7a7c82;
+      --dim:     #46474d;
+    }
+    [data-theme="light"] {
+      --bg:      #f4f3ef;
+      --bg2:     #eceae5;
+      --bg3:     #ffffff;
+      --surface: #ffffff;
+      --border:  #e0ddd6;
+      --text:    #18191b;
+      --muted:   #6b6c70;
+      --dim:     #bdbbb8;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+    /* ── SECTION BG BANDS ── */
+    .s-a { background: var(--bg); }
+    .s-b { background: var(--bg2); }
+    .s-c { background: var(--bg3); }
+    .section-wrap { padding: 5rem 0; }
+    .inner { max-width: 920px; margin: 0 auto; padding: 0 2rem; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 920px; margin: 0 auto; padding: 0 2rem;
+      height: 54px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); letter-spacing: 0.06em; }
+    .nav-logo b { color: var(--text); font-weight: 500; }
+    .nav-ctrl { display: flex; gap: 0.5rem; }
+    .cbtn {
+      font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em;
+      border: 1px solid var(--border); background: transparent; color: var(--muted);
+      padding: 0.28rem 0.6rem; border-radius: 5px; cursor: pointer;
+    }
+    .cbtn:hover { color: var(--text); border-color: var(--dim); }
+
+    /* ── HERO ── */
+    .hero { padding: 5rem 0 4rem; background: var(--bg); }
+    .hero .inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: end;
+    }
+    @media(max-width:620px) { .hero .inner { grid-template-columns: 1fr; } }
+    .hero-h1 {
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 800; line-height: 0.92; letter-spacing: -0.04em;
+    }
+    .hero-h1 em {
+      display: block; font-weight: 300; font-style: italic;
+      color: var(--muted); font-size: 0.6em; letter-spacing: -0.01em; margin-top: 0.15em;
+    }
+    .hero-pill {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em;
+      color: var(--muted); border: 1px solid var(--border);
+      padding: 0.28rem 0.65rem; border-radius: 99px; margin-bottom: 0.85rem;
+    }
+    .hero-pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #4ade80; display: block; }
+    .hero-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── SECTION LABEL ── */
+    .slabel { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; }
+    .snum {
+      font-family: var(--mono); font-size: 0.58rem; color: var(--dim);
+      letter-spacing: 0.12em; border: 1px solid var(--border); padding: 0.18rem 0.42rem; border-radius: 3px;
+    }
+    .stitle { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+    .sline { flex: 1; height: 1px; background: var(--border); }
+
+    /* ─────────────────────────────────────────
+       INTEGRATION CARDS  — first-version style
+    ───────────────────────────────────────── */
+    .int-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    @media(max-width:580px) { .int-grid { grid-template-columns: 1fr; } }
+
+    /* The whole card IS the link */
+    .int-card {
+      display: flex; flex-direction: column; gap: 0.9rem;
+      padding: 1.75rem;
+      background: var(--surface);
+      text-decoration: none; color: var(--text);
+      position: relative; overflow: hidden;
+      cursor: pointer;
+    }
+    .int-card:hover { background: var(--bg3); }
+
+    /* colored top accent bar */
+    .int-card::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--cc);
+      opacity: 0.9;
+    }
+
+    /* subtle color wash on hover */
+    .int-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--cc);
+      opacity: 0;
+      transition: opacity 0.25s;
+      pointer-events: none;
+    }
+    .int-card:hover::before { opacity: 0.04; }
+
+    .card-icon { font-size: 2rem; line-height: 1; display: block; }
+
+    .card-name {
+      font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text);
+    }
+    .card-source {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--cc); opacity: 0.9; margin-top: 0.15rem;
+    }
+
+    .card-desc {
+      font-size: 0.81rem; color: var(--muted); line-height: 1.6; flex: 1;
+    }
+
+    /* HACS oneliner */
+    .hacs-row {
+      display: flex; align-items: center; overflow: hidden;
+      background: var(--bg); border: 1px solid var(--border); border-radius: 7px;
+      /* stop card click propagation is handled in JS */
+    }
+    .hacs-chip {
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--cc);
+      padding: 0 0.65rem; height: 32px; display: flex; align-items: center;
+      border-right: 1px solid var(--border); white-space: nowrap; flex-shrink: 0;
+    }
+    .hacs-url {
+      font-family: var(--mono); font-size: 0.65rem; color: var(--muted);
+      padding: 0 0.7rem; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      height: 32px; display: flex; align-items: center;
+    }
+    .hacs-btn {
+      flex-shrink: 0; width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border: none; border-left: 1px solid var(--border);
+      background: transparent; cursor: pointer; font-size: 0.78rem; color: var(--dim);
+    }
+    .hacs-btn:hover { background: var(--border); color: var(--text); }
+    .hacs-btn.ok { color: #4ade80; }
+
+    /* card footer row */
+    .card-foot {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 0.1rem;
+    }
+    .card-foot-url {
+      font-family: var(--mono); font-size: 0.57rem; color: var(--dim); letter-spacing: 0.04em;
+    }
+    .card-gh {
+      font-family: var(--mono); font-size: 0.57rem; color: var(--dim);
+      text-decoration: none; letter-spacing: 0.04em;
+    }
+    .card-gh:hover { color: var(--muted); }
+
+    /* per-card colors */
+    .cc-blue    { --cc: #60a5fa; }
+    .cc-orange  { --cc: #f97316; }
+    .cc-green   { --cc: #4ade80; }
+    .cc-purple  { --cc: #a78bfa; }
+
+    /* ── REPOS LIST ── */
+    .rlist {
+      display: flex; flex-direction: column; gap: 1px;
+      background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+    }
+    .rrow {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: 0.9rem 1.2rem; background: var(--surface);
+      text-decoration: none; color: var(--text);
+    }
+    .rrow:hover { background: var(--bg3); }
+    .rleft { display: flex; align-items: center; gap: 0.85rem; }
+    .ricon {
+      width: 34px; height: 34px; border-radius: 7px;
+      background: var(--bg); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.95rem; flex-shrink: 0;
+    }
+    .rname { font-family: var(--mono); font-size: 0.77rem; }
+    .rdesc { font-size: 0.72rem; color: var(--muted); margin-top: 0.1rem; }
+    .rright { display: flex; align-items: center; gap: 0.55rem; }
+    .rtag {
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.17rem 0.42rem; border-radius: 4px; border: 1px solid var(--border); color: var(--dim);
+    }
+    .rarrow { color: var(--dim); font-size: 0.7rem; }
+    .rrow:hover .rarrow { color: var(--text); }
+
+    /* ─────────────────────────────────────────
+       ABOUT + PROJECTS  —  equal height layout
+       desktop: 2-col, about sticky left, projects scroll right
+       mobile: stacked
+    ───────────────────────────────────────── */
+    .combo-wrap { padding: 5rem 0; background: var(--bg2); }
+    .combo-inner {
+      max-width: 920px; margin: 0 auto; padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      grid-template-rows: 1fr;   /* single row — both children same height */
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    /* LEFT: about panel */
+    .about-panel {
+      background: var(--surface);
+      padding: 1.75rem;
+      display: flex; flex-direction: column; gap: 0;
+      /* sticky inside the grid row */
+      position: relative;
+    }
+    /* sticky inner content */
+    .about-sticky-inner {
+      position: sticky;
+      top: calc(54px + 1.5rem);
+    }
+
+    .ava {
+      width: 56px; height: 56px; border-radius: 50%; overflow: hidden;
+      border: 2px solid var(--border); background: var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; margin-bottom: 1rem; flex-shrink: 0;
+    }
+    .ava img { width: 100%; height: 100%; object-fit: cover; }
+    .aname { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.15rem; }
+    .arole {
+      font-family: var(--mono); font-size: 0.6rem; color: var(--muted);
+      letter-spacing: 0.07em; line-height: 1.5; margin-bottom: 0.85rem;
+    }
+    .abio { font-size: 0.79rem; color: var(--muted); line-height: 1.65; margin-bottom: 1rem; }
+    .alinks { display: flex; flex-direction: column; gap: 0.35rem; }
+    .al {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em;
+      color: var(--muted); text-decoration: none;
+      padding: 0.28rem 0.55rem; border: 1px solid var(--border); border-radius: 5px;
+      display: flex; align-items: center; gap: 0.35rem;
+    }
+    .al:hover { color: var(--text); border-color: var(--dim); }
+
+    /* RIGHT: projects panel */
+    .projects-panel {
+      background: var(--surface);
+      padding: 1.75rem;
+      display: flex; flex-direction: column;
+      /* allow this side to scroll horizontally for cards, but not grow vertically */
+      min-width: 0;
+    }
+    .projects-panel .slabel { margin-bottom: 1.25rem; }
+
+    /* horizontal scroll track — fills remaining height */
+    .pscroll-track {
+      flex: 1;
+      display: flex;
+      overflow-x: auto;
+      overflow-y: hidden;
+      gap: 0.9rem;
+      padding-bottom: 0.25rem;
+      scrollbar-width: none;
+      align-items: stretch; /* cards same height */
+    }
+    .pscroll-track::-webkit-scrollbar { display: none; }
+
+    .pcard {
+      flex: 0 0 175px;
+      background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+      padding: 1.1rem; text-decoration: none; color: var(--text);
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .pcard:hover { border-color: var(--dim); }
+    .pemoji { font-size: 1.4rem; line-height: 1; }
+    .pname { font-size: 0.85rem; font-weight: 700; letter-spacing: -0.01em; }
+    .pdesc { font-size: 0.7rem; color: var(--muted); line-height: 1.5; flex: 1; }
+    .ptag {
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--dim); border: 1px solid var(--border); padding: 0.17rem 0.4rem;
+      border-radius: 4px; align-self: flex-start;
+    }
+
+    /* mobile: stack */
+    @media(max-width: 700px) {
+      .combo-inner {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        border-radius: 14px;
+      }
+      .about-sticky-inner { position: static; }
+      .alinks { flex-direction: row; flex-wrap: wrap; }
+      .projects-panel { border-top: 1px solid var(--border); }
+    }
+
+    /* ── FOOTER ── */
+    footer { border-top: 1px solid var(--border); background: var(--bg); }
+    .footer-inner {
+      max-width: 920px; margin: 0 auto; padding: 1.5rem 2rem;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;
+    }
+    .fbrand { font-family: var(--mono); font-size: 0.68rem; color: var(--dim); letter-spacing: 0.08em; }
+    .flinks { display: flex; gap: 1.25rem; }
+    .flinks a { font-family: var(--mono); font-size: 0.63rem; color: var(--dim); text-decoration: none; }
+    .flinks a:hover { color: var(--muted); }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 1.75rem; left: 50%;
+      transform: translateX(-50%) translateY(60px);
+      background: var(--text); color: var(--bg);
+      font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.07em;
+      padding: 0.5rem 1rem; border-radius: 6px;
+      z-index: 999; opacity: 0; pointer-events: none;
+      transition: opacity 0.18s, transform 0.18s;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo"><b>BrunoAFK</b> · Home Assistant</span>
+    <div class="nav-ctrl">
+      <button class="cbtn" onclick="toggleLang()" id="langBtn">EN</button>
+      <button class="cbtn" onclick="toggleTheme()" id="themeBtn">☀️</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="inner">
+    <div>
+      <h1 class="hero-h1">
+        Home&thinsp;Assistant
+        <em>by BrunoAFK</em>
+      </h1>
+    </div>
+    <div>
+      <div class="hero-pill" data-hr="Sve na jednom mjestu" data-en="Everything in one place">Sve na jednom mjestu</div>
+      <p class="hero-desc" data-hr="Moje HACS integracije, skripte i alati za Home Assistant. Klikni karticu za dokumentaciju, kopiraj repo link za brzu instalaciju putem HACS-a." data-en="My HACS integrations, scripts and tools for Home Assistant. Click a card for documentation, copy the repo URL for quick HACS installation.">
+        Moje HACS integracije, skripte i alati za Home Assistant. Klikni karticu za dokumentaciju, kopiraj repo link za brzu instalaciju putem HACS-a.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 01 — HACS INTEGRATIONS ══ -->
+<div class="s-b section-wrap">
+  <div class="inner">
+    <div class="slabel">
+      <span class="snum">01</span>
+      <span class="stitle" data-hr="HACS Integracije" data-en="HACS Integrations">HACS Integracije</span>
+      <div class="sline"></div>
+    </div>
+
+    <div class="int-grid">
+
+      <!-- Vrijeme HR -->
+      <a class="int-card cc-blue" href="https://brunoafk.github.io/vrijeme_hr/" target="_blank">
+        <span class="card-icon">⛅</span>
+        <div>
+          <div class="card-name">Vrijeme HR</div>
+          <div class="card-source">DHMZ · meteo.hr</div>
+        </div>
+        <p class="card-desc" data-hr="Hrvatska vremenska prognoza u Home Assistantu temeljena na DHMZ podacima. Temperatura, vlažnost, tlak, vjetar i stanje neba za gradove diljem Hrvatske." data-en="Croatian weather forecast in Home Assistant powered by DHMZ. Temperature, humidity, pressure, wind and sky condition for cities across Croatia.">
+          Hrvatska vremenska prognoza u Home Assistantu temeljena na DHMZ podacima. Temperatura, vlažnost, tlak, vjetar i stanje neba za gradove diljem Hrvatske.
+        </p>
+        <div class="hacs-row" onclick="event.preventDefault(); copyHacs('https://github.com/BrunoAFK/vrijeme_hr', this)">
+          <span class="hacs-chip">HACS</span>
+          <span class="hacs-url">github.com/BrunoAFK/vrijeme_hr</span>
+          <button class="hacs-btn">📋</button>
+        </div>
+        <div class="card-foot">
+          <span class="card-foot-url">brunoafk.github.io/vrijeme_hr</span>
+          <a class="card-gh" href="https://github.com/BrunoAFK/vrijeme_hr" target="_blank" onclick="event.stopPropagation()">GitHub →</a>
+        </div>
+      </a>
+
+      <!-- Zagreb Transit -->
+      <a class="int-card cc-orange" href="https://brunoafk.github.io/zagreb_transit/" target="_blank">
+        <span class="card-icon">🚋</span>
+        <div>
+          <div class="card-name">Zagreb Transit</div>
+          <div class="card-source">ZET · GTFS-RT</div>
+        </div>
+        <p class="card-desc" data-hr="Javni prijevoz Zagreba u stvarnom vremenu. Polasci tramvaja i autobusa, stajališta i kašnjenja direktno u Home Assistantu." data-en="Zagreb public transport in real time. Tram and bus departures, stops and delays directly in Home Assistant.">
+          Javni prijevoz Zagreba u stvarnom vremenu. Polasci tramvaja i autobusa, stajališta i kašnjenja direktno u Home Assistantu.
+        </p>
+        <div class="hacs-row" onclick="event.preventDefault(); copyHacs('https://github.com/BrunoAFK/ZagrebTransit', this)">
+          <span class="hacs-chip">HACS</span>
+          <span class="hacs-url">github.com/BrunoAFK/ZagrebTransit</span>
+          <button class="hacs-btn">📋</button>
+        </div>
+        <div class="card-foot">
+          <span class="card-foot-url">brunoafk.github.io/zagreb_transit</span>
+          <a class="card-gh" href="https://github.com/BrunoAFK/ZagrebTransit" target="_blank" onclick="event.stopPropagation()">GitHub →</a>
+        </div>
+      </a>
+
+      <!-- ZenQuotes Tools -->
+      <a class="int-card cc-green" href="https://brunoafk.github.io/zenquotes_tools/" target="_blank">
+        <span class="card-icon">🍃</span>
+        <div>
+          <div class="card-name">ZenQuotes Tools</div>
+          <div class="card-source">zenquotes.io · AI</div>
+        </div>
+        <p class="card-desc" data-hr="Dnevne mudre izreke i 'na ovaj dan' sadržaj u Home Assistantu. AI prijevod na više jezika, lokalni cache i automatsko osvježavanje." data-en="Daily wisdom quotes and 'on this day' content in Home Assistant. AI translation, local cache and automatic refresh.">
+          Dnevne mudre izreke i 'na ovaj dan' sadržaj u Home Assistantu. AI prijevod na više jezika, lokalni cache i automatsko osvježavanje.
+        </p>
+        <div class="hacs-row" onclick="event.preventDefault(); copyHacs('https://github.com/BrunoAFK/zenquotes_tools', this)">
+          <span class="hacs-chip">HACS</span>
+          <span class="hacs-url">github.com/BrunoAFK/zenquotes_tools</span>
+          <button class="hacs-btn">📋</button>
+        </div>
+        <div class="card-foot">
+          <span class="card-foot-url">brunoafk.github.io/zenquotes_tools</span>
+          <a class="card-gh" href="https://github.com/BrunoAFK/zenquotes_tools" target="_blank" onclick="event.stopPropagation()">GitHub →</a>
+        </div>
+      </a>
+
+      <!-- Horoskop HR -->
+      <a class="int-card cc-purple" href="https://brunoafk.github.io/horoskop_hr/" target="_blank">
+        <span class="card-icon">🔮</span>
+        <div>
+          <div class="card-name">Horoskop HR</div>
+          <div class="card-source">ehoroskop.net · AI</div>
+        </div>
+        <p class="card-desc" data-hr="Dnevni, tjedni i mjesečni horoskop za sva 12 zodijačkih znakova u Home Assistantu, s AI prijevodom na više jezika." data-en="Daily, weekly and monthly horoscope for all 12 zodiac signs in Home Assistant, with AI translation into multiple languages.">
+          Dnevni, tjedni i mjesečni horoskop za sva 12 zodijačkih znakova u Home Assistantu, s AI prijevodom na više jezika.
+        </p>
+        <div class="hacs-row" onclick="event.preventDefault(); copyHacs('https://github.com/BrunoAFK/horoskop_hr', this)">
+          <span class="hacs-chip">HACS</span>
+          <span class="hacs-url">github.com/BrunoAFK/horoskop_hr</span>
+          <button class="hacs-btn">📋</button>
+        </div>
+        <div class="card-foot">
+          <span class="card-foot-url">brunoafk.github.io/horoskop_hr</span>
+          <a class="card-gh" href="https://github.com/BrunoAFK/horoskop_hr" target="_blank" onclick="event.stopPropagation()">GitHub →</a>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══ 02 — SCRIPTS & RESOURCES ══ -->
+<div class="s-a section-wrap">
+  <div class="inner">
+    <div class="slabel">
+      <span class="snum">02</span>
+      <span class="stitle" data-hr="Skripte & Resursi" data-en="Scripts & Resources">Skripte & Resursi</span>
+      <div class="sline"></div>
+    </div>
+
+    <div class="rlist">
+      <a href="https://github.com/BrunoAFK" target="_blank" class="rrow">
+        <div class="rleft">
+          <div class="ricon">🐍</div>
+          <div>
+            <div class="rname">ha-python-scripts</div>
+            <div class="rdesc" data-hr="Kolekcija Python skripti za automacije i servise u Home Assistantu" data-en="Python scripts for automations and services in Home Assistant">Kolekcija Python skripti za automacije i servise u Home Assistantu</div>
+          </div>
+        </div>
+        <div class="rright"><span class="rtag">Python</span><span class="rarrow">→</span></div>
+      </a>
+      <a href="https://github.com/BrunoAFK" target="_blank" class="rrow">
+        <div class="rleft">
+          <div class="ricon">📊</div>
+          <div>
+            <div class="rname">lovelace-cards</div>
+            <div class="rdesc" data-hr="Custom Lovelace UI kartice i gotovi dashboard template-i" data-en="Custom Lovelace UI cards and ready-made dashboard templates">Custom Lovelace UI kartice i gotovi dashboard template-i</div>
+          </div>
+        </div>
+        <div class="rright"><span class="rtag">YAML</span><span class="rarrow">→</span></div>
+      </a>
+      <a href="https://github.com/BrunoAFK" target="_blank" class="rrow">
+        <div class="rleft">
+          <div class="ricon">🤖</div>
+          <div>
+            <div class="rname">ha-automations</div>
+            <div class="rdesc" data-hr="Gotove automacije — obavijesti, scene, jutarnje rutine" data-en="Ready-made automations — notifications, scenes, morning routines">Gotove automacije — obavijesti, scene, jutarnje rutine</div>
+          </div>
+        </div>
+        <div class="rright"><span class="rtag">HA</span><span class="rarrow">→</span></div>
+      </a>
+      <a href="https://github.com/BrunoAFK" target="_blank" class="rrow">
+        <div class="rleft">
+          <div class="ricon">🔧</div>
+          <div>
+            <div class="rname">ha-config-snippets</div>
+            <div class="rdesc" data-hr="Konfiguracijski isječci, template sensori i utility skripte" data-en="Configuration snippets, template sensors and utility scripts">Konfiguracijski isječci, template sensori i utility skripte</div>
+          </div>
+        </div>
+        <div class="rright"><span class="rtag">Config</span><span class="rarrow">→</span></div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 03 + 04 — PROJECTS (scroll right) + ABOUT (sticky left) ══ -->
+<div class="combo-wrap">
+  <div class="inner">
+    <div class="combo-inner">
+
+      <!-- LEFT: About -->
+      <div class="about-panel">
+        <div class="about-sticky-inner">
+          <div class="slabel" style="margin-bottom:1.25rem">
+            <span class="snum">04</span>
+            <span class="stitle" data-hr="O meni" data-en="About me">O meni</span>
+          </div>
+          <div class="ava">
+            <img src="https://avatars.githubusercontent.com/BrunoAFK" alt="Bruno" onerror="this.parentNode.textContent='👤'">
+          </div>
+          <div class="aname">Bruno Pavelja</div>
+          <div class="arole">Operations Leader<br>DevOps · Zagreb, HR</div>
+          <p class="abio" data-hr="10+ godina iskustva u IT-u — skaliranje organizacija, DevOps infrastruktura i SaaS proizvodi. U slobodno vrijeme automatiziram dom i gradim open-source alate za Home Assistant zajednicu." data-en="10+ years in IT — scaling organizations, DevOps infrastructure and SaaS products. In my spare time I automate my home and build open-source tools for the HA community.">
+            10+ godina iskustva u IT-u — skaliranje organizacija, DevOps infrastruktura i SaaS proizvodi. U slobodno vrijeme automatiziram dom i gradim open-source alate za Home Assistant zajednicu.
+          </p>
+          <div class="alinks">
+            <a href="https://pavelja.com/" target="_blank" class="al">🌐 pavelja.com</a>
+            <a href="https://github.com/BrunoAFK" target="_blank" class="al">⬡ GitHub</a>
+            <a href="https://www.linkedin.com/in/brunopavelja/" target="_blank" class="al">in LinkedIn</a>
+            <a href="https://x.com/Bruno_AFK" target="_blank" class="al">✕ Twitter</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Projects scroll -->
+      <div class="projects-panel">
+        <div class="slabel" style="margin-bottom:1.25rem">
+          <span class="snum">03</span>
+          <span class="stitle" data-hr="Ostali projekti" data-en="Other projects">Ostali projekti</span>
+        </div>
+        <div class="pscroll-track">
+          <a href="https://brunoafk.github.io/CalendarDND/" target="_blank" class="pcard">
+            <span class="pemoji">📅</span>
+            <div class="pname">CalendarDND</div>
+            <p class="pdesc" data-hr="Kalendar s DND modom — automatizira ne-ometaj prema rasporedu." data-en="Calendar with DND mode — automates do-not-disturb based on schedule.">Kalendar s DND modom — automatizira ne-ometaj prema rasporedu.</p>
+            <span class="ptag">Web app</span>
+          </a>
+          <a href="https://github.com/BrunoAFK/proxmox-helper-nginx-manager" target="_blank" class="pcard">
+            <span class="pemoji">🖥️</span>
+            <div class="pname">Proxmox Nginx Mgr</div>
+            <p class="pdesc" data-hr="Helper za upravljanje Nginx proxy konfiguracijama na Proxmoxu." data-en="Helper tool for managing Nginx reverse proxy configs on Proxmox.">Helper za upravljanje Nginx proxy konfiguracijama na Proxmoxu.</p>
+            <span class="ptag">DevOps</span>
+          </a>
+          <a href="https://podcast.pavelja.me/" target="_blank" class="pcard">
+            <span class="pemoji">🎙️</span>
+            <div class="pname">Pavelja Podcast</div>
+            <p class="pdesc" data-hr="Razgovori o tehnologiji, operacijama i svakodnevnom životu." data-en="Conversations on technology, operations and everyday life.">Razgovori o tehnologiji, operacijama i svakodnevnom životu.</p>
+            <span class="ptag">Podcast</span>
+          </a>
+          <a href="https://pavelja.com/" target="_blank" class="pcard">
+            <span class="pemoji">🌐</span>
+            <div class="pname">pavelja.com</div>
+            <p class="pdesc" data-hr="Osobna web stranica — portfolio, životopis i kontakt." data-en="Personal website — portfolio, CV and contact info.">Osobna web stranica — portfolio, životopis i kontakt.</p>
+            <span class="ptag">Portfolio</span>
+          </a>
+        </div>
+      </div>
+
+    </div><!-- .combo-inner -->
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <span class="fbrand">BrunoAFK · <span id="yr"></span></span>
+    <div class="flinks">
+      <a href="https://github.com/BrunoAFK" target="_blank">GitHub</a>
+      <a href="https://pavelja.com/" target="_blank">pavelja.com</a>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  function toggleTheme() {
+    const d = document.documentElement;
+    const dark = d.getAttribute('data-theme') === 'dark';
+    d.setAttribute('data-theme', dark ? 'light' : 'dark');
+    document.getElementById('themeBtn').textContent = dark ? '🌙' : '☀️';
+  }
+
+  let lang = 'hr';
+  function toggleLang() {
+    lang = lang === 'hr' ? 'en' : 'hr';
+    document.getElementById('langBtn').textContent = lang === 'hr' ? 'EN' : 'HR';
+    document.querySelectorAll('[data-hr]').forEach(el => {
+      const v = el.getAttribute('data-' + lang);
+      if (v) el.innerHTML = v;
+    });
+  }
+
+  function copyHacs(url, el) {
+    navigator.clipboard.writeText(url).then(() => {
+      const btn = el.querySelector('.hacs-btn');
+      btn.textContent = '✓';
+      btn.classList.add('ok');
+      toast(lang === 'hr' ? 'Kopirano!' : 'Copied!');
+      setTimeout(() => { btn.textContent = '📋'; btn.classList.remove('ok'); }, 2000);
+    });
+  }
+
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+order: 30
+name: ZenQuotes Tools
+icon: "🍃"
+source:
+  hr: zenquotes.io · AI prijevod
+  en: zenquotes.io · AI translation
+description:
+  hr: Donosi dnevne mudre izreke i sadržaj na današnji dan u Home Assistant. Podržava AI prijevod, predmemoriju i automatsko osvježavanje.
+  en: Brings daily wisdom quotes and on-this-day content into Home Assistant. Supports AI translation, caching and automatic refresh.
+docsUrl: https://brunoafk.github.io/zenquotes_tools/
+repoUrl: https://github.com/BrunoAFK/zenquotes_tools
+repoDisplay: github.com/BrunoAFK/zenquotes_tools
+repoChip: HACS
+accentColor: "#4ade80"

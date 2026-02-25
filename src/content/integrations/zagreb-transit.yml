@@ -1,0 +1,14 @@
+order: 20
+name: Zagreb Transit
+icon: "🚋"
+source:
+  hr: ZET · GTFS / GTFS-RT
+  en: ZET · GTFS / GTFS-RT
+description:
+  hr: Integracija javnog prijevoza Zagreba u stvarnom vremenu. Prati polaske tramvaja i autobusa, stajališta i kašnjenja putem GTFS podataka.
+  en: Zagreb public transit real-time integration. Track tram and bus departures, stops and delays via GTFS and GTFS-RT feeds.
+docsUrl: https://brunoafk.github.io/zagreb_transit/
+repoUrl: https://github.com/BrunoAFK/ZagrebTransit
+repoDisplay: github.com/BrunoAFK/ZagrebTransit
+repoChip: HACS
+accentColor: "#f97316"

@@ -1,0 +1,237 @@
+backend:
+  name: git-gateway
+  branch: main
+
+local_backend: true
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  - name: site
+    label: Site Content
+    editor:
+      preview: true
+    files:
+      - label: Homepage
+        name: home
+        file: src/content/site/home.yml
+        fields:
+          - { label: Site title, name: siteTitle, widget: string }
+          - { label: Meta description, name: metaDescription, widget: text }
+          - { label: HTML lang, name: htmlLang, widget: string, default: hr }
+          - label: Navigation
+            name: nav
+            widget: object
+            fields:
+              - { label: Logo prefix, name: logoPrefix, widget: string }
+              - { label: Logo highlight, name: logoHighlight, widget: string }
+          - label: Hero
+            name: hero
+            widget: object
+            fields:
+              - label: Hero label
+                name: label
+                widget: object
+                fields:
+                  - { label: Croatian, name: hr, widget: string }
+                  - { label: English, name: en, widget: string }
+              - label: Hero title main
+                name: titleMain
+                widget: object
+                fields:
+                  - { label: Croatian, name: hr, widget: string }
+                  - { label: English, name: en, widget: string }
+              - label: Hero title sub
+                name: titleSub
+                widget: object
+                fields:
+                  - { label: Croatian, name: hr, widget: string }
+                  - { label: English, name: en, widget: string }
+              - label: Hero description
+                name: description
+                widget: object
+                fields:
+                  - { label: Croatian, name: hr, widget: text }
+                  - { label: English, name: en, widget: text }
+          - label: Section labels
+            name: sections
+            widget: object
+            fields:
+              - label: Integrations section
+                name: integrations
+                widget: object
+                fields:
+                  - { label: Number, name: number, widget: string }
+                  - label: Title
+                    name: title
+                    widget: object
+                    fields:
+                      - { label: Croatian, name: hr, widget: string }
+                      - { label: English, name: en, widget: string }
+              - label: Scripts section
+                name: scripts
+                widget: object
+                fields:
+                  - { label: Number, name: number, widget: string }
+                  - label: Title
+                    name: title
+                    widget: object
+                    fields:
+                      - { label: Croatian, name: hr, widget: string }
+                      - { label: English, name: en, widget: string }
+              - label: Projects section
+                name: projects
+                widget: object
+                fields:
+                  - { label: Number, name: number, widget: string }
+                  - label: Title
+                    name: title
+                    widget: object
+                    fields:
+                      - { label: Croatian, name: hr, widget: string }
+                      - { label: English, name: en, widget: string }
+              - label: About section
+                name: about
+                widget: object
+                fields:
+                  - { label: Number, name: number, widget: string }
+                  - label: Title
+                    name: title
+                    widget: object
+                    fields:
+                      - { label: Croatian, name: hr, widget: string }
+                      - { label: English, name: en, widget: string }
+          - label: About block
+            name: about
+            widget: object
+            fields:
+              - { label: Avatar URL, name: avatar, widget: string }
+              - { label: Avatar alt text, name: avatarAlt, widget: string }
+              - { label: Avatar fallback text, name: fallbackAvatar, widget: string, default: "👤" }
+              - { label: Name, name: name, widget: string }
+              - label: Role
+                name: role
+                widget: object
+                fields:
+                  - { label: Croatian, name: hr, widget: string }
+                  - { label: English, name: en, widget: string }
+              - label: Bio
+                name: bio
+                widget: object
+                fields:
+                  - { label: Croatian, name: hr, widget: text }
+                  - { label: English, name: en, widget: text }
+              - label: Social links
+                name: socialLinks
+                widget: list
+                summary: "{{fields.label}}"
+                fields:
+                  - { label: Label, name: label, widget: string }
+                  - { label: URL, name: url, widget: string }
+                  - { label: Icon, name: icon, widget: string }
+          - label: Footer
+            name: footer
+            widget: object
+            fields:
+              - { label: Footer text, name: text, widget: string }
+          - label: Translation settings
+            name: i18n
+            widget: object
+            fields:
+              - label: Default language
+                name: defaultLang
+                widget: select
+                options: [hr, en]
+              - label: Copy toast message
+                name: copyToast
+                widget: object
+                fields:
+                  - { label: Croatian, name: hr, widget: string }
+                  - { label: English, name: en, widget: string }
+
+  - name: integrations
+    label: Integrations
+    label_singular: Integration
+    editor:
+      preview: true
+    folder: src/content/integrations
+    extension: yml
+    format: yaml
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    identifier_field: name
+    summary: "{{fields.name}}"
+    fields:
+      - { label: Sort order (lower shows first), name: order, widget: number, value_type: int, min: 0 }
+      - { label: Name, name: name, widget: string }
+      - { label: Icon, name: icon, widget: string }
+      - label: Source
+        name: source
+        widget: object
+        fields:
+          - { label: Croatian, name: hr, widget: string }
+          - { label: English, name: en, widget: string }
+      - label: Description
+        name: description
+        widget: object
+        fields:
+          - { label: Croatian, name: hr, widget: text }
+          - { label: English, name: en, widget: text }
+      - { label: Docs URL, name: docsUrl, widget: string }
+      - { label: Repository URL, name: repoUrl, widget: string }
+      - { label: Repository display text, name: repoDisplay, widget: string }
+      - { label: Repo chip text, name: repoChip, widget: string, default: HACS }
+      - { label: Accent color, name: accentColor, widget: color, default: "#60a5fa", allowInput: true }
+
+  - name: scripts
+    label: Scripts
+    label_singular: Script
+    editor:
+      preview: true
+    folder: src/content/scripts
+    extension: yml
+    format: yaml
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    identifier_field: name
+    summary: "{{fields.name}}"
+    fields:
+      - { label: Sort order (lower shows first), name: order, widget: number, value_type: int, min: 0 }
+      - { label: Name, name: name, widget: string }
+      - { label: Icon, name: icon, widget: string }
+      - label: Description
+        name: description
+        widget: object
+        fields:
+          - { label: Croatian, name: hr, widget: text }
+          - { label: English, name: en, widget: text }
+      - { label: Tag, name: tag, widget: string }
+      - { label: URL, name: url, widget: string }
+
+  - name: projects
+    label: Projects
+    label_singular: Project
+    editor:
+      preview: true
+    folder: src/content/projects
+    extension: yml
+    format: yaml
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    identifier_field: name
+    summary: "{{fields.name}}"
+    fields:
+      - { label: Sort order (lower shows first), name: order, widget: number, value_type: int, min: 0 }
+      - { label: Name, name: name, widget: string }
+      - { label: Icon, name: icon, widget: string }
+      - label: Description
+        name: description
+        widget: object
+        fields:
+          - { label: Croatian, name: hr, widget: text }
+          - { label: English, name: en, widget: text }
+      - { label: Tag, name: tag, widget: string }
+      - { label: URL, name: url, widget: string }

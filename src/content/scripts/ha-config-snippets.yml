@@ -1,0 +1,8 @@
+order: 40
+name: ha-config-snippets
+icon: "🔧"
+description:
+  hr: Korisni konfiguracijski isječci, predlošci senzora i pomoćne skripte.
+  en: Useful config snippets, template sensors and utility scripts.
+tag: Config
+url: https://github.com/BrunoAFK

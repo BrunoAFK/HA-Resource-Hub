@@ -1,0 +1,8 @@
+order: 20
+name: lovelace-cards
+icon: "📊"
+description:
+  hr: Prilagođene Lovelace UI kartice i predlošci za nadzornu ploču.
+  en: Custom Lovelace UI cards and dashboard templates.
+tag: YAML
+url: https://github.com/BrunoAFK
