@@ -71,7 +71,7 @@ about:
 footer:
   text: BrunoAFK · Home Assistant
 i18n:
-  defaultLang: hr
+  defaultLang: en
   copyToast:
     hr: Repo link kopiran 📋
     en: Repo link copied 📋
