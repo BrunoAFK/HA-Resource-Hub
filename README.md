@@ -178,7 +178,50 @@ Edit `src/layouts/BaseLayout.astro`:
 - Output directory: `dist`
 - This is a static Astro site, so standard Pages static deployment works.
 
-If using Decap in production, configure auth/backend strategy appropriately (the default config currently uses `git-gateway`).
+If using Decap in production, make sure GitHub OAuth/auth is configured correctly for the `github` backend.
+
+## Go Live Checklist (Cloudflare Pages + Decap CMS)
+
+### 1. Connect repository to Cloudflare Pages
+
+1. Cloudflare Dashboard -> **Workers & Pages** -> **Create** -> **Pages** -> **Connect to Git**
+2. Select `BrunoAFK/HA-Resource-Hub`
+3. Build settings:
+   - Framework preset: `Astro` (or `None`)
+   - Build command: `npm run build`
+   - Build output directory: `dist`
+   - Node.js version: `20.13.1` (matches `.nvmrc`)
+4. Deploy
+
+### 2. Configure custom domain (optional but recommended)
+
+1. Open your Pages project -> **Custom domains**
+2. Add domain/subdomain and complete DNS instructions
+3. Wait for SSL to become active
+
+### 3. Enable Decap auth for production
+
+`local_backend: true` only helps on localhost. Live Decap login needs OAuth proxy.
+
+1. Create a GitHub OAuth App:
+   - Homepage URL: your live site URL
+   - Authorization callback URL: `<oauth-proxy-url>/callback`
+2. Deploy Decap OAuth proxy (for example via Cloudflare Worker using Decap's official template)
+3. Set proxy env vars/secrets:
+   - `OAUTH_CLIENT_ID`
+   - `OAUTH_CLIENT_SECRET`
+4. In `public/admin/config.yml`, set:
+   - `backend.base_url` to proxy URL
+   - `backend.auth_endpoint` (usually `auth`)
+5. Redeploy Pages
+
+### 4. Verify production behavior
+
+1. Open `/admin`
+2. Login with GitHub
+3. Edit one test entry and save
+4. Confirm commit appears in `main`
+5. Confirm site redeploys and content is visible live
 
 ## Suggested Dev Hygiene
 

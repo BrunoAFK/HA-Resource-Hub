@@ -1,6 +1,10 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: BrunoAFK/HA-Resource-Hub
   branch: main
+  # Production only: uncomment and point to your OAuth proxy service URL.
+  base_url: https://ha.pavelja.com
+  auth_endpoint: auth
 
 local_backend: true
 media_folder: public/uploads
