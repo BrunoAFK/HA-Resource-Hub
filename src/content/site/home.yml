@@ -58,16 +58,16 @@ about:
   socialLinks:
     - label: Website
       url: https://pavelja.com/
-      icon: 🌐
+      icon: bi bi-globe2
     - label: GitHub
       url: https://github.com/BrunoAFK
-      icon: 🐙
+      icon: bi bi-github
     - label: LinkedIn
       url: https://www.linkedin.com/in/brunopavelja/
-      icon: 💼
+      icon: bi bi-linkedin
     - label: GitLab
       url: https://gitlab.com/bruno-afk
-      icon: 🦊
+      icon: bi bi-gitlab
 footer:
   text: BrunoAFK · Home Assistant
 i18n:

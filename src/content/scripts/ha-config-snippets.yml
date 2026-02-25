@@ -1,6 +1,6 @@
 order: 40
 name: ha-config-snippets
-icon: "🔧"
+icon: "bi bi-tools"
 description:
   hr: Korisni konfiguracijski isječci, predlošci senzora i pomoćne skripte.
   en: Useful config snippets, template sensors and utility scripts.

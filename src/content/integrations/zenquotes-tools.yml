@@ -1,6 +1,6 @@
 order: 30
 name: ZenQuotes Tools
-icon: "🍃"
+icon: "bi bi-quote"
 source:
   hr: zenquotes.io · AI prijevod
   en: zenquotes.io · AI translation

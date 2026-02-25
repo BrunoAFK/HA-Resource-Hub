@@ -120,7 +120,7 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
                 style={`--card-color: ${integration.data.accentColor}; animation-delay: ${getDelay(index, 0.1, 0.1)};`}
               >
                 <div class="card-accent-bar"></div>
-                <span class="card-icon">{integration.data.icon}</span>
+                <span class="card-icon"><i class={integration.data.icon} aria-hidden="true"></i></span>
                 <div>
                   <div class="card-name">{integration.data.name}</div>
                   <div
@@ -177,7 +177,7 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
                 style={`animation-delay:${getDelay(index, 0.1, 0.05)}`}
               >
                 <div class="repo-row-left">
-                  <span class="repo-icon">{scriptItem.data.icon}</span>
+                  <span class="repo-icon"><i class={scriptItem.data.icon} aria-hidden="true"></i></span>
                   <div>
                     <div class="repo-name">{scriptItem.data.name}</div>
                     <div
@@ -239,7 +239,7 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
                   {
                     site.about.socialLinks.map((link) => (
                       <a href={link.url} target="_blank" rel="noopener noreferrer" class="soc" title={link.label}>
-                        {link.icon}
+                        <i class={link.icon} aria-hidden="true"></i>
                       </a>
                     ))
                   }
@@ -273,7 +273,7 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
                     class="project-card"
                     style={`animation-delay:${getDelay(index, 0.1, 0.05)}`}
                   >
-                    <span class="project-card-icon">{project.data.icon}</span>
+                    <span class="project-card-icon"><i class={project.data.icon} aria-hidden="true"></i></span>
                     <div class="project-card-name">{project.data.name}</div>
                     <p class="project-card-desc" data-hr={project.data.description.hr} data-en={project.data.description.en}>
                       {project.data.description.hr}
@@ -301,6 +301,25 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
 
   <script is:inline>
     document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+    function trackEvent(name, payload = {}) {
+      try {
+        const tracker = window.umami;
+        if (!tracker || typeof tracker.track !== 'function') return;
+        tracker.track(name, payload);
+      } catch (_) {}
+    }
+
+    function setIconClass(container, iconClass) {
+      if (!container || typeof iconClass !== 'string') return;
+      let icon = container.querySelector('i');
+      if (!icon) {
+        icon = document.createElement('i');
+        icon.setAttribute('aria-hidden', 'true');
+        container.replaceChildren(icon);
+      }
+      icon.className = iconClass;
+    }
 
     function setCookie(name, value, maxAgeSeconds) {
       document.cookie = `${name}=${encodeURIComponent(value)}; max-age=${maxAgeSeconds}; path=/; samesite=lax`;
@@ -341,6 +360,7 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
     function setThemeMode(mode) {
       applyThemeMode(mode);
       setCookie('theme', themeMode, THEME_COOKIE_MAX_AGE);
+      trackEvent('theme_changed', { mode: themeMode });
     }
 
     document.querySelectorAll('.theme-btn[data-theme-choice]').forEach((btn) => {
@@ -388,6 +408,7 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
       const next = lang === 'hr' ? 'en' : 'hr';
       applyLang(next);
       setCookie('lang', next, THEME_COOKIE_MAX_AGE);
+      trackEvent('language_changed', { lang: next });
     }
 
     langBtn.addEventListener('click', toggleLang);
@@ -418,6 +439,10 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
           icon.textContent = '📋';
           icon.classList.remove('ok');
         }, 2000);
+        trackEvent('repo_link_copied', {
+          repo_url: url,
+          integration_name: row.closest('.int-card')?.getAttribute('data-entry-name') || 'unknown'
+        });
       });
     }
 
@@ -441,6 +466,42 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
       img.addEventListener('error', () => {
         const fallback = img.getAttribute('data-fallback') || '👤';
         img.parentElement.textContent = fallback;
+      });
+    });
+
+    document.querySelectorAll('.int-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        trackEvent('integration_opened', {
+          name: card.getAttribute('data-entry-name') || 'unknown',
+          url: card.getAttribute('href') || ''
+        });
+      });
+    });
+
+    document.querySelectorAll('.repo-row').forEach((row) => {
+      row.addEventListener('click', () => {
+        trackEvent('script_opened', {
+          name: row.getAttribute('data-entry-name') || 'unknown',
+          url: row.getAttribute('href') || ''
+        });
+      });
+    });
+
+    document.querySelectorAll('.project-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        trackEvent('project_opened', {
+          name: card.getAttribute('data-entry-name') || 'unknown',
+          url: card.getAttribute('href') || ''
+        });
+      });
+    });
+
+    document.querySelectorAll('#aboutSocialLinks .soc').forEach((link) => {
+      link.addEventListener('click', () => {
+        trackEvent('about_social_opened', {
+          url: link.getAttribute('href') || '',
+          label: link.getAttribute('title') || 'social'
+        });
       });
     });
 
@@ -530,7 +591,10 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
               anchor.rel = 'noopener noreferrer';
               anchor.className = 'soc';
               anchor.title = typeof link.label === 'string' ? link.label : 'Link';
-              anchor.textContent = typeof link.icon === 'string' ? link.icon : '•';
+              const icon = document.createElement('i');
+              icon.setAttribute('aria-hidden', 'true');
+              icon.className = typeof link.icon === 'string' ? link.icon : 'bi bi-link-45deg';
+              anchor.appendChild(icon);
               linksWrap.appendChild(anchor);
             });
           }
@@ -575,7 +639,7 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
       if (typeof data.docsUrl === 'string') card.href = data.docsUrl;
       if (typeof data.icon === 'string') {
         const iconEl = card.querySelector('.card-icon');
-        if (iconEl) iconEl.textContent = data.icon;
+        setIconClass(iconEl, data.icon);
       }
       if (typeof data.accentColor === 'string') card.style.setProperty('--card-color', data.accentColor);
       setLocalizedContent(card.querySelector('.card-source'), data.source);
@@ -607,7 +671,7 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
       if (typeof data.url === 'string') row.href = data.url;
       if (typeof data.icon === 'string') {
         const iconEl = row.querySelector('.repo-icon');
-        if (iconEl) iconEl.textContent = data.icon;
+        setIconClass(iconEl, data.icon);
       }
       if (typeof data.tag === 'string') {
         const tagEl = row.querySelector('.repo-tag');
@@ -629,7 +693,7 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
       if (typeof data.url === 'string') card.href = data.url;
       if (typeof data.icon === 'string') {
         const iconEl = card.querySelector('.project-card-icon');
-        if (iconEl) iconEl.textContent = data.icon;
+        setIconClass(iconEl, data.icon);
       }
       if (typeof data.tag === 'string') {
         const tagEl = card.querySelector('.project-card-tag');
@@ -659,6 +723,68 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
         applyProjectPreview(payload);
       }
     });
+
+    const scrollMilestones = [25, 50, 75, 100];
+    const scrollReached = new Set();
+    let scrollTicking = false;
+
+    function handleScrollDepth() {
+      scrollTicking = false;
+      const maxScrollable = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+      const scrolled = Math.max(window.scrollY || window.pageYOffset || 0, 0);
+      const progress = Math.min(100, Math.round((scrolled / maxScrollable) * 100));
+
+      scrollMilestones.forEach((milestone) => {
+        if (progress >= milestone && !scrollReached.has(milestone)) {
+          scrollReached.add(milestone);
+          trackEvent('scroll_depth_reached', { percent: milestone });
+        }
+      });
+    }
+
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (scrollTicking) return;
+        scrollTicking = true;
+        window.requestAnimationFrame(handleScrollDepth);
+      },
+      { passive: true }
+    );
+    handleScrollDepth();
+
+    const aboutWrap = document.querySelector('.about-wrap');
+    const aboutStayTrackedKey = 'umami_about_5s_tracked';
+    let aboutStayTimer = null;
+    let aboutStayTracked = sessionStorage.getItem(aboutStayTrackedKey) === '1';
+
+    if (aboutWrap && !aboutStayTracked) {
+      const aboutObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.target !== aboutWrap || aboutStayTracked) return;
+
+            if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+              if (!aboutStayTimer) {
+                aboutStayTimer = window.setTimeout(() => {
+                  trackEvent('about_engaged_5s', { threshold_seconds: 5 });
+                  aboutStayTracked = true;
+                  sessionStorage.setItem(aboutStayTrackedKey, '1');
+                  aboutObserver.disconnect();
+                  aboutStayTimer = null;
+                }, 5000);
+              }
+            } else if (aboutStayTimer) {
+              window.clearTimeout(aboutStayTimer);
+              aboutStayTimer = null;
+            }
+          });
+        },
+        { threshold: [0.6] }
+      );
+
+      aboutObserver.observe(aboutWrap);
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {

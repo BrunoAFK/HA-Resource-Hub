@@ -1,6 +1,6 @@
 order: 20
 name: Proxmox Nginx Manager
-icon: "🖥️"
+icon: "bi bi-server"
 description:
   hr: Univerzalna skripta za instalaciju, nadogradnju i migraciju Nginx Proxy Managera na Debian i Ubuntu Proxmox sustavima.
   en: Universal script for installing, updating and migrating Nginx Proxy Manager on Debian and Ubuntu Proxmox hosts.

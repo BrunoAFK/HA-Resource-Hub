@@ -1,6 +1,6 @@
 order: 20
 name: lovelace-cards
-icon: "📊"
+icon: "bi bi-grid-3x3-gap"
 description:
   hr: Prilagođene Lovelace UI kartice i predlošci za nadzornu ploču.
   en: Custom Lovelace UI cards and dashboard templates.
