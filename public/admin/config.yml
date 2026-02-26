@@ -2,7 +2,7 @@ backend:
   name: github
   repo: BrunoAFK/HA-Resource-Hub
   branch: main
-  base_url: https://ha.pavelja.com
+  base_url: https://ha-hub.afk.place
   auth_endpoint: api/auth
 
 local_backend: false
