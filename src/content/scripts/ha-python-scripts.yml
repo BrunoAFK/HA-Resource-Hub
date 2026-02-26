@@ -1,8 +1,9 @@
 order: 10
-name: ha-python-scripts
-icon: "🐍"
+name: rss-news-ha-agent
+icon: 📰
 description:
-  hr: Zbirka Python skripti za automatizacije u Home Assistantu.
-  en: Collection of Python scripts for Home Assistant automations.
-tag: Python
-url: https://github.com/BrunoAFK
+  hr: "Gotov n8n + HA news tok s AI agentom za sažetke, objavu i prikaz vijesti. "
+  en: Ready n8n + HA news flow with an AI agent for summaries, publishing, and
+    dashboard display.
+tag: n8n
+url: https://github.com/BrunoAFK/rss-ai-news-ha-agent
