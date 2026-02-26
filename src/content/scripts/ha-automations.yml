@@ -1,8 +1,8 @@
 order: 30
-name: ha-automations
-icon: "🤖"
+name: ai-prompts
+icon: 🤖
 description:
-  hr: Gotove automatizacije za svakodnevnu uporabu, obavijesti, scene i rutine.
-  en: Ready-made automations for daily use, notifications, scenes and routines.
-tag: HA
-url: https://github.com/BrunoAFK
+  hr: Gotovi AI prompti i kontekst senzori za dnevne poruke i rutine.
+  en: Ready AI prompts and context sensors for daily messages and routines.
+tag: AI
+url: https://github.com/BrunoAFK/ai-prompts
