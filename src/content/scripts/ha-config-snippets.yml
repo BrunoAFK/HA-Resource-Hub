@@ -1,8 +1,8 @@
 order: 40
-name: ha-config-snippets
-icon: "🔧"
+name: image-rotation
+icon: 🖼️
 description:
-  hr: Korisni konfiguracijski isječci, predlošci senzora i pomoćne skripte.
-  en: Useful config snippets, template sensors and utility scripts.
-tag: Config
-url: https://github.com/BrunoAFK
+  hr: Primjeri rotacije slika po kontekstu uz senzore, skriptu i kartice.
+  en: Context-based image rotation examples with sensors, script, and cards.
+tag: Image
+url: https://github.com/BrunoAFK/image-rotation
