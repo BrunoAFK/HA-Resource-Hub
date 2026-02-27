@@ -1,8 +1,8 @@
 order: 90
-name: step-comparison
+name: ha-step-comparison
 icon: 👟
 description:
   hr: "Gotove kartice za usporedbu koraka, ranking i dnevne ciljeve. "
   en: Ready cards for step comparison, ranking, and daily goals.
 tag: UI
-url: https://github.com/BrunoAFK/step-comparison
+url: https://github.com/BrunoAFK/ha-step-comparison
