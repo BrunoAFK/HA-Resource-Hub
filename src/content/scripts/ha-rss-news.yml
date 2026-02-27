@@ -1,0 +1,10 @@
+order: 60
+name: ha-rss-news
+icon: 🗞️
+description:
+  en: Simple Home Assistant + n8n RSS news feed (BBC, The Guardian, CNN), merged
+    and sorted by time, with clean markdown output and no AI.
+  hr: Jednostavan Home Assistant + n8n RSS news feed (BBC, The Guardian, CNN),
+    spojen i sortiran po vremenu, s čistim markdown izlazom i bez AI-a.
+tag: n8n
+url: https://github.com/BrunoAFK/ha-rss-news
