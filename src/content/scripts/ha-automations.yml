@@ -1,5 +1,5 @@
 order: 30
-name: ai-prompts
+name: ha-ai-morning-notification
 icon: 🤖
 description:
   hr: Gotovi AI prompti i kontekst senzori za dnevne poruke i rutine.
