@@ -519,11 +519,7 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
     const projectsScroller = document.querySelector('.projects-scroll');
     const projectsPrevBtn = document.querySelector('[data-projects-nav="prev"]');
     const projectsNextBtn = document.querySelector('[data-projects-nav="next"]');
-
-    function getProjectScrollTargets() {
-      if (!projectsScroller) return [];
-      return Array.from(projectsScroller.querySelectorAll('.project-card')).map((card) => card.offsetLeft);
-    }
+    let projectsSnapRestoreTimer = null;
 
     function updateProjectsNav() {
       if (!projectsScroller || !projectsPrevBtn || !projectsNextBtn) return;
@@ -541,20 +537,36 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
     function scrollProjects(direction) {
       if (!projectsScroller) return;
       const current = projectsScroller.scrollLeft;
-      const tolerance = 8;
-      const targets = getProjectScrollTargets();
-      const fallbackTarget = direction < 0
+      const maxScrollLeft = Math.max(projectsScroller.scrollWidth - projectsScroller.clientWidth, 0);
+      const tolerance = 4;
+      const pageWidth = Math.max(projectsScroller.clientWidth * 0.92, 240);
+
+      if (direction < 0 && current <= tolerance) return;
+      if (direction > 0 && current >= maxScrollLeft - tolerance) return;
+
+      const targetLeft = direction < 0 && current >= maxScrollLeft - tolerance
         ? 0
-        : Math.max(projectsScroller.scrollWidth - projectsScroller.clientWidth, 0);
+        : Math.max(
+            0,
+            Math.min(
+              current + direction * pageWidth,
+              maxScrollLeft
+            )
+          );
 
-      const target = direction < 0
-        ? [...targets].reverse().find((value) => value < current - tolerance)
-        : targets.find((value) => value > current + tolerance);
-
+      projectsScroller.style.scrollSnapType = 'none';
+      if (projectsSnapRestoreTimer) {
+        window.clearTimeout(projectsSnapRestoreTimer);
+      }
       projectsScroller.scrollTo({
-        left: target ?? fallbackTarget,
+        left: targetLeft,
         behavior: 'smooth'
       });
+      projectsSnapRestoreTimer = window.setTimeout(() => {
+        projectsScroller.style.scrollSnapType = '';
+        updateProjectsNav();
+        projectsSnapRestoreTimer = null;
+      }, 380);
       trackEvent('projects_slider_navigated', {
         direction: direction < 0 ? 'left' : 'right'
       });

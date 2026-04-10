@@ -1,0 +1,191 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e3]: BrunoAFK · HA
+    - generic [ref=e4]:
+      - button "Toggle language" [ref=e5] [cursor=pointer]: HR
+      - 'group "Theme mode: auto (light)" [ref=e6]':
+        - button "Light mode" [ref=e7] [cursor=pointer]: ☀
+        - button "Auto mode" [pressed] [ref=e8] [cursor=pointer]: A
+        - button "Dark mode" [ref=e9] [cursor=pointer]: 🌙
+  - generic [ref=e11]:
+    - paragraph [ref=e12]: Home Assistant Resource Hub
+    - heading "Home Assistant Resource Hub" [level=1] [ref=e13]:
+      - text: Home Assistant
+      - generic [ref=e14]: Resource Hub
+    - paragraph [ref=e15]: My HACS integrations, scripts and tools for Home Assistant. Open a card for docs, and use the copy action to copy repository links for quick HACS installation.
+  - main [ref=e16]:
+    - generic [ref=e18]:
+      - generic [ref=e19]:
+        - generic [ref=e20]: "01"
+        - generic [ref=e21]: HACS integrations
+      - generic [ref=e22]:
+        - link "⛅ Vrijeme HR DHMZ · meteo.hr Croatian weather integration powered by DHMZ data. Provides forecasts, temperature, humidity, pressure and wind for cities across Croatia. HACS github.com/BrunoAFK/vrijeme_hr" [ref=e23] [cursor=pointer]:
+          - /url: https://brunoafk.github.io/vrijeme_hr/
+          - generic [ref=e25]: ⛅
+          - generic [ref=e26]:
+            - generic [ref=e27]: Vrijeme HR
+            - generic [ref=e28]: DHMZ · meteo.hr
+          - paragraph [ref=e29]: Croatian weather integration powered by DHMZ data. Provides forecasts, temperature, humidity, pressure and wind for cities across Croatia.
+          - button "HACS github.com/BrunoAFK/vrijeme_hr" [ref=e30]:
+            - generic [ref=e31]: HACS
+            - generic [ref=e32]: github.com/BrunoAFK/vrijeme_hr
+            - generic [ref=e33]: 📋
+        - link "🚋 Zagreb Transit ZET · GTFS / GTFS-RT Zagreb public transit real-time integration. Track tram and bus departures, stops and delays via GTFS and GTFS-RT feeds. HACS github.com/BrunoAFK/ZagrebTransit" [ref=e34] [cursor=pointer]:
+          - /url: https://brunoafk.github.io/zagreb_transit/
+          - generic [ref=e36]: 🚋
+          - generic [ref=e37]:
+            - generic [ref=e38]: Zagreb Transit
+            - generic [ref=e39]: ZET · GTFS / GTFS-RT
+          - paragraph [ref=e40]: Zagreb public transit real-time integration. Track tram and bus departures, stops and delays via GTFS and GTFS-RT feeds.
+          - button "HACS github.com/BrunoAFK/ZagrebTransit" [ref=e41]:
+            - generic [ref=e42]: HACS
+            - generic [ref=e43]: github.com/BrunoAFK/ZagrebTransit
+            - generic [ref=e44]: 📋
+        - link "🍃 ZenQuotes Tools zenquotes.io · AI translation Brings daily wisdom quotes and on-this-day content into Home Assistant. Supports AI translation, caching and automatic refresh. HACS github.com/BrunoAFK/zenquotes_tools" [ref=e45] [cursor=pointer]:
+          - /url: https://brunoafk.github.io/zenquotes_tools/
+          - generic [ref=e47]: 🍃
+          - generic [ref=e48]:
+            - generic [ref=e49]: ZenQuotes Tools
+            - generic [ref=e50]: zenquotes.io · AI translation
+          - paragraph [ref=e51]: Brings daily wisdom quotes and on-this-day content into Home Assistant. Supports AI translation, caching and automatic refresh.
+          - button "HACS github.com/BrunoAFK/zenquotes_tools" [ref=e52]:
+            - generic [ref=e53]: HACS
+            - generic [ref=e54]: github.com/BrunoAFK/zenquotes_tools
+            - generic [ref=e55]: 📋
+        - link "🔮 Horoskop HR ehoroskop.net · AI Daily, weekly and monthly horoscopes for all zodiac signs in Home Assistant. Supports AI translation into multiple languages. HACS github.com/BrunoAFK/horoskop_hr" [ref=e56] [cursor=pointer]:
+          - /url: https://brunoafk.github.io/horoskop_hr/
+          - generic [ref=e58]: 🔮
+          - generic [ref=e59]:
+            - generic [ref=e60]: Horoskop HR
+            - generic [ref=e61]: ehoroskop.net · AI
+          - paragraph [ref=e62]: Daily, weekly and monthly horoscopes for all zodiac signs in Home Assistant. Supports AI translation into multiple languages.
+          - button "HACS github.com/BrunoAFK/horoskop_hr" [ref=e63]:
+            - generic [ref=e64]: HACS
+            - generic [ref=e65]: github.com/BrunoAFK/horoskop_hr
+            - generic [ref=e66]: 📋
+    - generic [ref=e68]:
+      - generic [ref=e69]:
+        - generic [ref=e70]: "02"
+        - generic [ref=e71]: Scripts and resources
+      - generic [ref=e72]:
+        - link "📰 rss-news-ha-agent Ready n8n + HA news flow with an AI agent for summaries, publishing, and dashboard display. n8n →" [ref=e73] [cursor=pointer]:
+          - /url: https://github.com/BrunoAFK/rss-ai-news-ha-agent
+          - generic [ref=e74]:
+            - generic [ref=e75]: 📰
+            - generic [ref=e76]:
+              - generic [ref=e77]: rss-news-ha-agent
+              - generic [ref=e78]: Ready n8n + HA news flow with an AI agent for summaries, publishing, and dashboard display.
+          - generic [ref=e79]:
+            - generic [ref=e80]: n8n
+            - generic [ref=e81]: →
+        - link "🤖 ha-ai-morning-notification Ready AI prompts and context sensors for daily messages and routines. AI →" [ref=e82] [cursor=pointer]:
+          - /url: https://github.com/BrunoAFK/ha-ai-morning-notification
+          - generic [ref=e83]:
+            - generic [ref=e84]: 🤖
+            - generic [ref=e85]:
+              - generic [ref=e86]: ha-ai-morning-notification
+              - generic [ref=e87]: Ready AI prompts and context sensors for daily messages and routines.
+          - generic [ref=e88]:
+            - generic [ref=e89]: AI
+            - generic [ref=e90]: →
+        - link "🖼️ ha-image-rotation Context-based image rotation examples with sensors, script, and cards. Image →" [ref=e91] [cursor=pointer]:
+          - /url: https://github.com/BrunoAFK/ha-image-rotation
+          - generic [ref=e92]:
+            - generic [ref=e93]: 🖼️
+            - generic [ref=e94]:
+              - generic [ref=e95]: ha-image-rotation
+              - generic [ref=e96]: Context-based image rotation examples with sensors, script, and cards.
+          - generic [ref=e97]:
+            - generic [ref=e98]: Image
+            - generic [ref=e99]: →
+        - link "🗞️ ha-rss-news Simple Home Assistant + n8n RSS news feed (BBC, The Guardian, CNN), merged and sorted by time, with clean markdown output and no AI. n8n →" [ref=e100] [cursor=pointer]:
+          - /url: https://github.com/BrunoAFK/ha-rss-news
+          - generic [ref=e101]:
+            - generic [ref=e102]: 🗞️
+            - generic [ref=e103]:
+              - generic [ref=e104]: ha-rss-news
+              - generic [ref=e105]: Simple Home Assistant + n8n RSS news feed (BBC, The Guardian, CNN), merged and sorted by time, with clean markdown output and no AI.
+          - generic [ref=e106]:
+            - generic [ref=e107]: n8n
+            - generic [ref=e108]: →
+        - link "👟 ha-step-comparison Ready cards for step comparison, ranking, and daily goals. UI →" [ref=e109] [cursor=pointer]:
+          - /url: https://github.com/BrunoAFK/ha-step-comparison
+          - generic [ref=e110]:
+            - generic [ref=e111]: 👟
+            - generic [ref=e112]:
+              - generic [ref=e113]: ha-step-comparison
+              - generic [ref=e114]: Ready cards for step comparison, ranking, and daily goals.
+          - generic [ref=e115]:
+            - generic [ref=e116]: UI
+            - generic [ref=e117]: →
+    - generic [ref=e120]:
+      - generic [ref=e121]:
+        - generic [ref=e122]:
+          - generic [ref=e123]: "04"
+          - generic [ref=e124]: About me
+        - generic [ref=e126]:
+          - img "Bruno" [ref=e128]
+          - generic [ref=e129]: Bruno Pavelja
+          - generic [ref=e130]: Operations Leader · DevOps · Zagreb
+          - paragraph [ref=e131]: 10+ years in IT, DevOps, org scaling and SaaS. In spare time I build HA tools and open-source projects.
+          - generic [ref=e132]:
+            - link "Website" [ref=e133] [cursor=pointer]:
+              - /url: https://pavelja.com/
+              - generic [ref=e134]: 
+            - link "GitHub" [ref=e135] [cursor=pointer]:
+              - /url: https://github.com/BrunoAFK
+              - generic [ref=e136]: 
+            - link "LinkedIn" [ref=e137] [cursor=pointer]:
+              - /url: https://www.linkedin.com/in/brunopavelja/
+              - generic [ref=e138]: 
+            - link "GitLab" [ref=e139] [cursor=pointer]:
+              - /url: https://gitlab.com/bruno-afk
+              - generic [ref=e140]: 
+      - generic [ref=e141]:
+        - generic [ref=e142]:
+          - generic [ref=e143]:
+            - generic [ref=e144]: "03"
+            - generic [ref=e145]: Other projects
+          - generic "Project slider controls" [ref=e146]:
+            - button "Scroll projects right" [ref=e147] [cursor=pointer]: →
+        - generic [ref=e148]:
+          - link "📅 CalendarDND Android app that automatically enables and disables Do Not Disturb based on calendar events, with privacy-first on-device processing. Android app" [ref=e149] [cursor=pointer]:
+            - /url: https://brunoafk.github.io/CalendarDND/
+            - generic [ref=e150]: 📅
+            - generic [ref=e151]: CalendarDND
+            - paragraph [ref=e152]: Android app that automatically enables and disables Do Not Disturb based on calendar events, with privacy-first on-device processing.
+            - generic [ref=e153]: Android app
+          - link "🖥️ Proxmox Nginx Manager Universal script for installing, updating and migrating Nginx Proxy Manager on Debian and Ubuntu Proxmox hosts. DevOps" [ref=e154] [cursor=pointer]:
+            - /url: https://github.com/BrunoAFK/proxmox-helper-nginx-manager
+            - generic [ref=e155]: 🖥️
+            - generic [ref=e156]: Proxmox Nginx Manager
+            - paragraph [ref=e157]: Universal script for installing, updating and migrating Nginx Proxy Manager on Debian and Ubuntu Proxmox hosts.
+            - generic [ref=e158]: DevOps
+          - link "🎙️ Paveljame Podcast Aggregator and distribution channel for unofficial Croatian radio show RSS feeds playable in any podcast app. Podcast" [ref=e159] [cursor=pointer]:
+            - /url: https://podcast.afk.place/
+            - generic [ref=e160]: 🎙️
+            - generic [ref=e161]: Paveljame Podcast
+            - paragraph [ref=e162]: Aggregator and distribution channel for unofficial Croatian radio show RSS feeds playable in any podcast app.
+            - generic [ref=e163]: Podcast
+          - link "🌐 pavelja.com Personal site focused on experience, projects, contact and professional profile in operations and DevOps. Portfolio" [ref=e164] [cursor=pointer]:
+            - /url: https://pavelja.com/
+            - generic [ref=e165]: 🌐
+            - generic [ref=e166]: pavelja.com
+            - paragraph [ref=e167]: Personal site focused on experience, projects, contact and professional profile in operations and DevOps.
+            - generic [ref=e168]: Portfolio
+  - contentinfo [ref=e169]:
+    - generic [ref=e171]: BrunoAFK · Home Assistant · © 2026
+  - generic [ref=e172]: Repo link copied 📋
+  - generic [ref=e175]:
+    - button "Menu" [ref=e176]:
+      - img [ref=e178]
+      - generic: Menu
+    - button "Inspect" [ref=e182]:
+      - img [ref=e184]
+      - generic: Inspect
+    - button "Audit" [ref=e186]:
+      - img [ref=e188]
+      - generic: Audit
+    - button "Settings" [ref=e191]:
+      - img [ref=e193]
+      - generic: Settings
