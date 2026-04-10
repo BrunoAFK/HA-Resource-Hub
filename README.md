@@ -38,6 +38,7 @@ npm run decap
 
 ```text
 src/
+  content.config.ts     # Zod schemas and loaders for content collections
   pages/
     index.astro          # Main page, content rendering, interactive behavior
     admin.astro          # Decap CMS bootstrap page
@@ -46,7 +47,6 @@ src/
   styles/
     global.css           # Theme and component styling
   content/
-    config.ts            # Zod schemas for all content collections
     site/home.yml        # Global copy, section labels, i18n defaults
     integrations/*.yml   # Integration cards
     scripts/*.yml        # Script/resource links
@@ -58,7 +58,7 @@ public/
 
 ## Content Model (Important)
 
-All user-facing content is validated by `src/content/config.ts`.
+All user-facing content is validated by `src/content.config.ts`.
 
 ### Practical rules
 
@@ -71,7 +71,7 @@ All user-facing content is validated by `src/content/config.ts`.
 
 1. Edit YAML directly in `src/content/**` for fast dev iterations.
 2. Use `/admin` when non-technical editors need a safe UI.
-3. Keep schema (`config.ts`) and CMS fields (`public/admin/config.yml`) aligned when adding fields.
+3. Keep schema (`content.config.ts`) and CMS fields (`public/admin/config.yml`) aligned when adding fields.
 
 ## Development Tips and Tricks
 
@@ -79,7 +79,7 @@ All user-facing content is validated by `src/content/config.ts`.
 
 If you add/change a field:
 
-1. Update Zod schema in `src/content/config.ts`
+1. Update Zod schema in `src/content.config.ts`
 2. Update corresponding collection fields in `public/admin/config.yml`
 3. Update rendering in `src/pages/index.astro`
 
@@ -141,7 +141,7 @@ Tip:
 ### Add a new top-level field to Home page
 
 1. Add field to `src/content/site/home.yml`
-2. Add schema in `src/content/config.ts`
+2. Add schema in `src/content.config.ts`
 3. Render it in `src/pages/index.astro`
 4. Add field in `public/admin/config.yml` so CMS can edit it
 
@@ -190,7 +190,7 @@ If using Decap in production, make sure GitHub OAuth/auth is configured correctl
    - Framework preset: `Astro` (or `None`)
    - Build command: `npm run build`
    - Build output directory: `dist`
-   - Node.js version: `20.13.1` (matches `.nvmrc`)
+   - Node.js version: `24.14.1` (matches `.nvmrc`)
 4. Deploy
 
 ### 2. Configure custom domain (optional but recommended)

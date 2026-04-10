@@ -1,4 +1,5 @@
 import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
 
 const localizedText = z.object({
   hr: z.string().min(1),
@@ -6,7 +7,10 @@ const localizedText = z.object({
 });
 
 const siteCollection = defineCollection({
-  type: 'data',
+  loader: glob({
+    base: './src/content/site',
+    pattern: 'home.yml'
+  }),
   schema: z.object({
     siteTitle: z.string().min(1),
     metaDescription: z.string().min(1),
@@ -65,7 +69,10 @@ const siteCollection = defineCollection({
 });
 
 const integrationsCollection = defineCollection({
-  type: 'data',
+  loader: glob({
+    base: './src/content/integrations',
+    pattern: '*.yml'
+  }),
   schema: z.object({
     order: z.number().int().nonnegative(),
     name: z.string().min(1),
@@ -81,7 +88,10 @@ const integrationsCollection = defineCollection({
 });
 
 const projectsCollection = defineCollection({
-  type: 'data',
+  loader: glob({
+    base: './src/content/projects',
+    pattern: '*.yml'
+  }),
   schema: z.object({
     order: z.number().int().nonnegative(),
     name: z.string().min(1),
@@ -93,7 +103,10 @@ const projectsCollection = defineCollection({
 });
 
 const scriptsCollection = defineCollection({
-  type: 'data',
+  loader: glob({
+    base: './src/content/scripts',
+    pattern: '*.yml'
+  }),
   schema: z.object({
     order: z.number().int().nonnegative(),
     name: z.string().min(1),

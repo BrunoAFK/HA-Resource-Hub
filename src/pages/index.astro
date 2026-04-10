@@ -249,16 +249,38 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
           </div>
 
           <div class="combo-col">
-            <div class="section-header">
-              <span class="section-num" id="sectionNumProjects">{site.sections.projects.number}</span>
-              <span
-                id="sectionTitleProjects"
-                class="section-title"
-                data-hr={site.sections.projects.title.hr}
-                data-en={site.sections.projects.title.en}
-              >
-                {site.sections.projects.title.hr}
-              </span>
+            <div class="section-header section-header-projects">
+              <div class="section-header-main">
+                <span class="section-num" id="sectionNumProjects">{site.sections.projects.number}</span>
+                <span
+                  id="sectionTitleProjects"
+                  class="section-title"
+                  data-hr={site.sections.projects.title.hr}
+                  data-en={site.sections.projects.title.en}
+                >
+                  {site.sections.projects.title.hr}
+                </span>
+              </div>
+              <div class="projects-nav" aria-label="Project slider controls">
+                <button
+                  class="projects-nav-btn"
+                  type="button"
+                  data-projects-nav="prev"
+                  aria-label="Scroll projects left"
+                  hidden
+                >
+                  ←
+                </button>
+                <button
+                  class="projects-nav-btn"
+                  type="button"
+                  data-projects-nav="next"
+                  aria-label="Scroll projects right"
+                  hidden
+                >
+                  →
+                </button>
+              </div>
             </div>
 
             <div class="projects-scroll">
@@ -493,6 +515,43 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
         });
       });
     });
+
+    const projectsScroller = document.querySelector('.projects-scroll');
+    const projectsPrevBtn = document.querySelector('[data-projects-nav="prev"]');
+    const projectsNextBtn = document.querySelector('[data-projects-nav="next"]');
+
+    function updateProjectsNav() {
+      if (!projectsScroller || !projectsPrevBtn || !projectsNextBtn) return;
+
+      const maxScrollLeft = Math.max(projectsScroller.scrollWidth - projectsScroller.clientWidth, 0);
+      const hasOverflow = maxScrollLeft > 4;
+      const scrollLeft = projectsScroller.scrollLeft;
+      const atStart = scrollLeft <= 4;
+      const atEnd = scrollLeft >= maxScrollLeft - 4;
+
+      projectsPrevBtn.hidden = !hasOverflow || atStart;
+      projectsNextBtn.hidden = !hasOverflow || atEnd;
+    }
+
+    function scrollProjects(direction) {
+      if (!projectsScroller) return;
+      const amount = Math.max(projectsScroller.clientWidth * 0.82, 240);
+      projectsScroller.scrollBy({
+        left: direction * amount,
+        behavior: 'smooth'
+      });
+      trackEvent('projects_slider_navigated', {
+        direction: direction < 0 ? 'left' : 'right'
+      });
+    }
+
+    if (projectsScroller && projectsPrevBtn && projectsNextBtn) {
+      projectsPrevBtn.addEventListener('click', () => scrollProjects(-1));
+      projectsNextBtn.addEventListener('click', () => scrollProjects(1));
+      projectsScroller.addEventListener('scroll', updateProjectsNav, { passive: true });
+      window.addEventListener('resize', updateProjectsNav, { passive: true });
+      updateProjectsNav();
+    }
 
     function setTextContent(element, value) {
       if (!element || typeof value !== 'string') return;

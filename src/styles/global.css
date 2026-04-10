@@ -238,6 +238,12 @@
       gap: 1rem;
       margin-bottom: 2rem;
     }
+    .section-header-main {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      min-width: 0;
+    }
     .section-num {
       font-family: 'DM Mono', monospace;
       font-size: 0.65rem;
@@ -453,6 +459,45 @@
       touch-action: pan-x;
     }
     .projects-scroll::-webkit-scrollbar { display: none; }
+    .section-header-projects {
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .projects-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-shrink: 0;
+    }
+    .projects-nav-btn {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.9rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .projects-nav-btn:hover {
+      color: var(--text);
+      border-color: var(--text);
+      transform: translateY(-1px);
+    }
+    .projects-nav-btn:focus-visible {
+      outline: 2px solid var(--text);
+      outline-offset: 1px;
+    }
+    .projects-nav-btn[hidden] {
+      display: none;
+    }
     .project-card {
       flex: 0 0 220px;
       background: var(--surface);
@@ -647,6 +692,13 @@
       .combo-row {
         grid-template-columns: 1fr;
         row-gap: 3rem;
+      }
+      .section-header-projects {
+        align-items: flex-start;
+      }
+      .projects-nav-btn {
+        width: 1.9rem;
+        height: 1.9rem;
       }
       .footer-min { padding: 1rem; }
       nav { padding: 1rem; }
