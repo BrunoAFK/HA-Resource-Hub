@@ -520,6 +520,11 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
     const projectsPrevBtn = document.querySelector('[data-projects-nav="prev"]');
     const projectsNextBtn = document.querySelector('[data-projects-nav="next"]');
 
+    function getProjectScrollTargets() {
+      if (!projectsScroller) return [];
+      return Array.from(projectsScroller.querySelectorAll('.project-card')).map((card) => card.offsetLeft);
+    }
+
     function updateProjectsNav() {
       if (!projectsScroller || !projectsPrevBtn || !projectsNextBtn) return;
 
@@ -535,9 +540,19 @@ const getDelay = (index: number, start = 0.1, step = 0.05) =>
 
     function scrollProjects(direction) {
       if (!projectsScroller) return;
-      const amount = Math.max(projectsScroller.clientWidth * 0.82, 240);
-      projectsScroller.scrollBy({
-        left: direction * amount,
+      const current = projectsScroller.scrollLeft;
+      const tolerance = 8;
+      const targets = getProjectScrollTargets();
+      const fallbackTarget = direction < 0
+        ? 0
+        : Math.max(projectsScroller.scrollWidth - projectsScroller.clientWidth, 0);
+
+      const target = direction < 0
+        ? [...targets].reverse().find((value) => value < current - tolerance)
+        : targets.find((value) => value > current + tolerance);
+
+      projectsScroller.scrollTo({
+        left: target ?? fallbackTarget,
         behavior: 'smooth'
       });
       trackEvent('projects_slider_navigated', {

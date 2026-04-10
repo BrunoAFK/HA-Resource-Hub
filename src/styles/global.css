@@ -457,6 +457,8 @@
       scrollbar-width: none;
       overscroll-behavior-x: contain;
       touch-action: pan-x;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
     }
     .projects-scroll::-webkit-scrollbar { display: none; }
     .section-header-projects {
@@ -512,6 +514,8 @@
       transition: border-color 0.2s, transform 0.2s;
       opacity: 0;
       transform: translateY(16px);
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
     }
     .project-card.in-view {
       animation: fadeSlideUp 0.4s ease both;
